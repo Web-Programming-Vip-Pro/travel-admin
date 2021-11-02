@@ -12,6 +12,11 @@ const Sidebar = () => {
   ])
   return (
     <div className="app-sidebar">
+      <div className="logo hidden-sidebar-logo">
+        <Link to="/" className="logo-icon">
+          <span className="logo-text">Travel</span>
+        </Link>
+      </div>
       <div className="app-menu">
         <ul className="accordion-menu">
           <li className="sidebar-title">Apps</li>
