@@ -5,13 +5,13 @@ import Index from './pages'
 const Routes = () => {
   return (
     <Router>
-      <Switch>
-        <DefaultLayout>
+      <DefaultLayout>
+        <Switch>
           <Route path="/">
             <Index />
           </Route>
-        </DefaultLayout>
-      </Switch>
+        </Switch>
+      </DefaultLayout>
     </Router>
   )
 }
