@@ -10,7 +10,9 @@ const DefaultLayout = ({ children }: { children?: React.ReactChild }) => {
         <div className="app-header">
           <Navbar />
         </div>
-        {children}
+        <div className="app-content">
+          <div className="content-wrapper">{children}</div>
+        </div>
       </div>
     </div>
   )
