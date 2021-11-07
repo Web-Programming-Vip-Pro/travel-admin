@@ -1,12 +1,6 @@
-import React from 'react'
+import MapExample from '@/components/Maps/MapExample.js'
 
-// components
-
-import MapExample from 'components/Maps/MapExample.js'
-
-// layout for page
-
-import Admin from 'layouts/Admin.js'
+import Admin from '@/layouts/Admin.js'
 
 export default function Maps() {
   return (
