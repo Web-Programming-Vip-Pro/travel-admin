@@ -8,7 +8,7 @@ export default function HeaderStats() {
       <div className="relative pt-12 pb-32 bg-blueGray-800 md:pt-32">
         <div className="w-full px-4 mx-auto md:px-10">
           <div>
-            <div className="grid grid-cols-4 gap-3">
+            <div className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-4">
               <CardStats
                 statSubtitle="REVENUES"
                 statTitle="924$"
