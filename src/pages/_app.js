@@ -5,6 +5,7 @@ import PageChange from 'src/components/PageChange/PageChange.js'
 
 import '@fortawesome/fontawesome-free/css/all.min.css'
 import '@/styles/index.css'
+import '@fontsource/inter'
 
 Router.events.on('routeChangeStart', (url) => {
   console.log(`Loading: ${url}`)
