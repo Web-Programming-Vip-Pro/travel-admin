@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 
 import NotificationDropdown from '@/components/Dropdowns/NotificationDropdown.js'
 import UserDropdown from '@/components/Dropdowns/UserDropdown.js'
