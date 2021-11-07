@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import Link from 'next/link'
 
-import NotificationDropdown from '@/components/Dropdowns/NotificationDropdown.js'
-import UserDropdown from '@/components/Dropdowns/UserDropdown.js'
+import NotificationDropdown from '@/components/Shared/Dropdowns/NotificationDropdown.js'
+import UserDropdown from '@/components/Shared/Dropdowns/UserDropdown.js'
 import { useMenuSidebar } from '@/hooks/useMenuSidebar'
 
 export default function Sidebar() {

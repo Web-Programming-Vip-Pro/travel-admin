@@ -1,5 +1,5 @@
-import CardSettings from '@/components/Cards/CardSettings.js'
-import CardProfile from '@/components/Cards/CardProfile.js'
+import CardSettings from '@/components/Shared/Cards/CardSettings.js'
+import CardProfile from '@/components/Shared/Cards/CardProfile.js'
 
 import Admin from '@/layouts/Admin.js'
 
