@@ -5,13 +5,12 @@ import '@/styles/index.css'
 import '@fontsource/inter'
 import { useVerifyUser } from '@/services/auth'
 import { useUserStore } from '@/store/user'
-import { useEffect } from 'react'
 
 export default function MyApp({ Component, pageProps }) {
   const Layout = Component.layout || (({ children }) => <>{children}</>)
   const { user, isLoading, isError } = useVerifyUser()
   if (!isLoading) {
-    useUserStore.getState().setIsLoading(true)
+    useUserStore.getState().setIsLoading(false)
     if (isError) {
       useUserStore.getState().setUser(null)
     } else {
