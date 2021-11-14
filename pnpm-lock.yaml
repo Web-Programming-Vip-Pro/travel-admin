@@ -6,6 +6,7 @@ specifiers:
   '@popperjs/core': 2.9.1
   '@tailwindcss/forms': ^0.3.4
   autoprefixer: 10.4.0
+  axios: ^0.24.0
   chart.js: 3.6.0
   dayjs: ^1.10.7
   gulp: 4.0.2
@@ -16,15 +17,20 @@ specifiers:
   react: ^17.0.2
   react-chartjs-2: ^3.3.0
   react-dom: ^17.0.2
+  react-hook-form: ^7.19.5
   react-scripts: 4.0.3
+  swr: ^1.0.1
   tailwindcss: 2.2.19
   typescript: 4.2.3
+  universal-cookie: ^4.0.4
+  zustand: ^3.6.5
 
 dependencies:
   '@fontsource/inter': 4.5.0
   '@fortawesome/fontawesome-free': 5.15.3
   '@popperjs/core': 2.9.1
   '@tailwindcss/forms': 0.3.4_tailwindcss@2.2.19
+  axios: 0.24.0
   chart.js: 3.6.0
   dayjs: 1.10.7
   gulp: 4.0.2
@@ -33,7 +39,11 @@ dependencies:
   react: 17.0.2
   react-chartjs-2: 3.3.0_chart.js@3.6.0+react@17.0.2
   react-dom: 17.0.2_react@17.0.2
+  react-hook-form: 7.19.5_react@17.0.2
   react-scripts: 4.0.3_react@17.0.2+typescript@4.2.3
+  swr: 1.0.1_react@17.0.2
+  universal-cookie: 4.0.4
+  zustand: 3.6.5_react@17.0.2
 
 optionalDependencies:
   typescript: 4.2.3
@@ -2308,6 +2318,10 @@ packages:
       '@babel/types': 7.16.0
     dev: false
 
+  /@types/cookie/0.3.3:
+    resolution: {integrity: sha512-LKVP3cgXBT9RYj+t+9FDKwS5tdI+rPBXaNSkma7hvqy35lc7mAokC2zsqWJH0LaqIt3B962nuYI77hsJoT1gow==}
+    dev: false
+
   /@types/eslint/7.28.2:
     resolution: {integrity: sha512-KubbADPkfoU75KgKeKLsFHXnU4ipH7wYg0TRT33NK3N3yiu7jlFAAoygIWBV+KbuHx/G+AvuGX6DllnK35gfJA==}
     dependencies:
@@ -3233,6 +3247,14 @@ packages:
   /axe-core/4.3.5:
     resolution: {integrity: sha512-WKTW1+xAzhMS5dJsxWkliixlO/PqC4VhmO9T4juNYcaTg9jzWiJsou6m5pxWYGfigWbwzJWeFY6z47a+4neRXA==}
     engines: {node: '>=4'}
+    dev: false
+
+  /axios/0.24.0:
+    resolution: {integrity: sha512-Q6cWsys88HoPgAaFAVUb0WpPk0O8iTeisR9IMqy9G8AbO4NlpVknrnQS03zzF9PGAWgO3cgletO3VjV/P7VztA==}
+    dependencies:
+      follow-redirects: 1.14.5_debug@4.3.2
+    transitivePeerDependencies:
+      - debug
     dev: false
 
   /axobject-query/2.2.0:
@@ -4874,6 +4896,11 @@ packages:
   /depd/1.1.2:
     resolution: {integrity: sha1-m81S4UwJd2PnSbJ0xDRu0uVgtak=}
     engines: {node: '>= 0.6'}
+    dev: false
+
+  /dequal/2.0.2:
+    resolution: {integrity: sha512-q9K8BlJVxK7hQYqa6XISGmBZbtQQWVXSrRrWreHC94rMt1QL/Impruc+7p2CYSYuVIUr+YCt6hjrs1kkdJRTug==}
+    engines: {node: '>=6'}
     dev: false
 
   /des.js/1.0.1:
@@ -10667,6 +10694,14 @@ packages:
     resolution: {integrity: sha512-nQTTcUu+ATDbrSD1BZHr5kgSD4oF8OFjxun8uAaL8RwPBacGBNPf/yAuVVdx17N8XNzRDMrZ9XcKZHCjPW+9ew==}
     dev: false
 
+  /react-hook-form/7.19.5_react@17.0.2:
+    resolution: {integrity: sha512-+M9gd0nWWASuEitf5PQGOGNElnHknzY3rGISrPDXwsOmZb7c/jyvkRUqk4OJXaZit1ZwesSv+EysttdAeFEfmw==}
+    peerDependencies:
+      react: ^16.8.0 || ^17
+    dependencies:
+      react: 17.0.2
+    dev: false
+
   /react-is/16.13.1:
     resolution: {integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==}
     dev: false
@@ -12112,6 +12147,15 @@ packages:
       util.promisify: 1.0.1
     dev: false
 
+  /swr/1.0.1_react@17.0.2:
+    resolution: {integrity: sha512-EPQAxSjoD4IaM49rpRHK0q+/NzcwoT8c0/Ylu/u3/6mFj/CWnQVjNJ0MV2Iuw/U+EJSd2TX5czdAwKPYZIG0YA==}
+    peerDependencies:
+      react: ^16.11.0 || ^17.0.0
+    dependencies:
+      dequal: 2.0.2
+      react: 17.0.2
+    dev: false
+
   /symbol-tree/3.2.4:
     resolution: {integrity: sha512-9QNk5KwDF+Bvz+PyObkmSYjI5ksVUYtjW7AU22r2NKcfLJcXp96hkDWU3+XndOsUb+AQ9QhfzfCT2O+CNWT5Tw==}
     dev: false
@@ -12646,6 +12690,13 @@ packages:
     engines: {node: '>=4'}
     dependencies:
       crypto-random-string: 1.0.0
+    dev: false
+
+  /universal-cookie/4.0.4:
+    resolution: {integrity: sha512-lbRVHoOMtItjWbM7TwDLdl8wug7izB0tq3/YVKhT/ahB4VDvWMyvnADfnJI8y6fSvsjh51Ix7lTGC6Tn4rMPhw==}
+    dependencies:
+      '@types/cookie': 0.3.3
+      cookie: 0.4.0
     dev: false
 
   /universalify/0.1.2:
@@ -13500,4 +13551,16 @@ packages:
   /yocto-queue/0.1.0:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
+    dev: false
+
+  /zustand/3.6.5_react@17.0.2:
+    resolution: {integrity: sha512-/WfLJuXiEJimt61KGMHebrFBwckkCHGhAgVXTgPQHl6IMzjqm6MREb1OnDSnCRiSmRdhgdFCctceg6tSm79hiw==}
+    engines: {node: '>=12.7.0'}
+    peerDependencies:
+      react: '>=16.8'
+    peerDependenciesMeta:
+      react:
+        optional: true
+    dependencies:
+      react: 17.0.2
     dev: false
