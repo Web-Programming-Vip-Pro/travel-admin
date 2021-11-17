@@ -112,17 +112,15 @@ function LoginForm() {
 
 export default function Index() {
   const router = useRouter()
-  const isUserLoaded = useUserStore((state) => state.isLoading)
   const user = useUserStore((state) => state.user)
-  const isUserNotLoggedIn = isUserLoaded && !user
-  if (isUserLoaded && user) {
+  if (user) {
     router.push('/dashboard')
   }
   return (
     <>
       <div className="container mx-auto px-4 h-full">
         <div className="flex content-center items-center justify-center h-full">
-          {isUserNotLoggedIn && <LoginForm />}
+          {!user && <LoginForm />}
         </div>
       </div>
     </>
