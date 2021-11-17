@@ -5,6 +5,7 @@ import '@/styles/index.css'
 import '@fontsource/inter'
 import { useVerifyUser } from '@/services/auth'
 import { useUserStore } from '@/store/user'
+import Loading from '@/components/Shared/Loading'
 
 export default function MyApp({ Component, pageProps }) {
   const Layout = Component.layout || (({ children }) => <>{children}</>)
@@ -26,9 +27,13 @@ export default function MyApp({ Component, pageProps }) {
         />
         <title>Fleety Admin</title>
       </Head>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      {isLoading ? (
+        <Loading />
+      ) : (
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      )}
     </>
   )
 }
