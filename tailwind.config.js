@@ -92,6 +92,7 @@ module.exports = {
     'disabled',
   ],
   plugins: [
+    require('@tailwindcss/typography'),
     require('daisyui'),
     require('@tailwindcss/forms'),
     plugin(function ({ addComponents, theme }) {

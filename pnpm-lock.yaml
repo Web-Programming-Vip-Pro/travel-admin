@@ -6,6 +6,7 @@ specifiers:
   '@headlessui/react': ^1.4.2
   '@popperjs/core': 2.9.1
   '@tailwindcss/forms': ^0.3.4
+  '@tailwindcss/typography': ^0.4.1
   autoprefixer: 10.4.0
   axios: ^0.24.0
   chart.js: 3.6.0
@@ -37,6 +38,7 @@ dependencies:
   '@headlessui/react': 1.4.2_react-dom@17.0.2+react@17.0.2
   '@popperjs/core': 2.9.1
   '@tailwindcss/forms': 0.3.4_tailwindcss@2.2.19
+  '@tailwindcss/typography': 0.4.1_tailwindcss@2.2.19
   axios: 0.24.0
   chart.js: 3.6.0
   daisyui: 1.16.2
@@ -2308,6 +2310,18 @@ packages:
       tailwindcss: '>=2.0.0'
     dependencies:
       mini-svg-data-uri: 1.4.3
+      tailwindcss: 2.2.19_0c54bdadaf9d9c9c6c134cb2c6c061a3
+    dev: false
+
+  /@tailwindcss/typography/0.4.1_tailwindcss@2.2.19:
+    resolution: {integrity: sha512-ovPPLUhs7zAIJfr0y1dbGlyCuPhpuv/jpBoFgqAc658DWGGrOBWBMpAWLw2KlzbNeVk4YBJMzue1ekvIbdw6XA==}
+    peerDependencies:
+      tailwindcss: '>=2.0.0'
+    dependencies:
+      lodash.castarray: 4.4.0
+      lodash.isplainobject: 4.0.6
+      lodash.merge: 4.6.2
+      lodash.uniq: 4.5.0
       tailwindcss: 2.2.19_0c54bdadaf9d9c9c6c134cb2c6c061a3
     dev: false
 
@@ -8459,8 +8473,16 @@ packages:
     resolution: {integrity: sha1-DM8tiRZq8Ds2Y8eWU4t1rG4RTZ0=}
     dev: false
 
+  /lodash.castarray/4.4.0:
+    resolution: {integrity: sha1-wCUTUV4wna3dTCTGDP3c9ZdtkRU=}
+    dev: false
+
   /lodash.debounce/4.0.8:
     resolution: {integrity: sha1-gteb/zCmfEAF/9XiUVMArZyk168=}
+    dev: false
+
+  /lodash.isplainobject/4.0.6:
+    resolution: {integrity: sha1-fFJqUtibRcRcxpC4gWO+BJf1UMs=}
     dev: false
 
   /lodash.memoize/4.1.2:
