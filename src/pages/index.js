@@ -4,6 +4,7 @@ import { useSession } from 'next-auth/react'
 export default function Index() {
   const router = useRouter()
   const { data: session, status } = useSession()
+  console.log(session)
   if (status !== 'loading') {
     if (session) {
       router.push('/dashboard')
