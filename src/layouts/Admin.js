@@ -6,6 +6,11 @@ import { useSession } from 'next-auth/react'
 
 export default function Admin({ children }) {
   const { data: session, status } = useSession()
+
+  if (status === 'loading') {
+    return <p>Loading</p>
+  }
+
   if (status !== 'loading') {
     if (!session) {
       return (window.location.href = '/api/auth/signin')
@@ -17,7 +22,6 @@ export default function Admin({ children }) {
       <Sidebar />
       <div className="relative md:ml-64 bg-blueGray-100">
         <AdminNavbar />
-        {/* Header */}
         <HeaderStats />
         <div className="w-full px-4 mx-auto -m-24 md:px-10">
           {children}
