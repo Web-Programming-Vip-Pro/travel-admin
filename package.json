@@ -10,6 +10,7 @@
     "@tailwindcss/forms": "^0.3.4",
     "axios": "^0.24.0",
     "chart.js": "3.6.0",
+    "daisyui": "^1.16.2",
     "dayjs": "^1.10.7",
     "draft-js": "^0.11.7",
     "gulp": "4.0.2",
