@@ -20,6 +20,18 @@ export default function Sidebar() {
       link: '/dashboard/settings',
       active: false,
     },
+    {
+      title: 'Pages',
+      icon: 'fas fa-tools',
+      link: '/dashboard/pages',
+      active: false,
+    },
+    {
+      title: 'Countries',
+      icon: 'fas fa-tools',
+      link: '/dashboard/countries',
+      active: false,
+    },
   ])
   return (
     <>
