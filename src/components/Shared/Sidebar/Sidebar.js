@@ -32,6 +32,12 @@ export default function Sidebar() {
       link: '/dashboard/countries',
       active: false,
     },
+    {
+      title: 'Cities',
+      icon: 'fas fa-tools',
+      link: '/dashboard/cities',
+      active: false,
+    },
   ])
   return (
     <>
