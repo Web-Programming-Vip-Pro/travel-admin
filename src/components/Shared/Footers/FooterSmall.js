@@ -42,7 +42,8 @@ export default function FooterSmall(props) {
                   <a
                     href="https://fleety.space/about"
                     target="_blank"
-                    className="text-white hover:text-blueGray-300 text-sm font-semibold block py-1 px-3" rel="noreferrer"
+                    className="text-white hover:text-blueGray-300 text-sm font-semibold block py-1 px-3"
+                    rel="noreferrer"
                   >
                     About
                   </a>
@@ -51,7 +52,8 @@ export default function FooterSmall(props) {
                   <a
                     href="https://fleety.space/blog"
                     target="_blank"
-                    className="text-white hover:text-blueGray-300 text-sm font-semibold block py-1 px-3" rel="noreferrer"
+                    className="text-white hover:text-blueGray-300 text-sm font-semibold block py-1 px-3"
+                    rel="noreferrer"
                   >
                     Blog
                   </a>
