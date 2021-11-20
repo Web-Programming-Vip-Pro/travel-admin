@@ -3,11 +3,14 @@ import Admin from '@/layouts/Admin'
 import {
   addCountry,
   deleteCountry,
+  mutateCountries,
   updateCountry,
   useCountries,
+  useTotalCountries,
 } from '@/services/countries'
 import { useEffect, useState } from 'react'
 import { useToggle } from 'react-use'
+import PaginationButton from '@/components/Shared/Pagination'
 
 function CountryModal({ isOpen, toggle, isAddNewCountry, selectedCountry }) {
   const [name, setName] = useState(isAddNewCountry ? '' : selectedCountry.name)
@@ -48,17 +51,23 @@ function CountryModal({ isOpen, toggle, isAddNewCountry, selectedCountry }) {
 }
 
 const Countries = () => {
-  const { countries, isLoading, isError } = useCountries()
+  const [page, setPage] = useState(0)
+  const limit = 10
+  const { countries, isLoading, isError } = useCountries(page, limit)
+  const { total } = useTotalCountries(limit)
   const [selectedCountry, setSelectedCountry] = useState(null)
   const [isAddNewCountry, toggleAddNewCountry] = useToggle(true)
+
   function selectCountry(id, name) {
     setSelectedCountry({ id, name })
     toggle()
     toggleAddNewCountry(false)
   }
-  function confirmAndRemove(id) {
+  async function confirmAndRemove(id) {
     if (window.confirm('Are you sure?')) {
-      deleteCountry(id)
+      await deleteCountry(id)
+      alert('Country deleted')
+      mutateCountries(page, limit)
     }
   }
   const [isOpen, toggle] = useToggle(false)
@@ -66,6 +75,7 @@ const Countries = () => {
     if (!isOpen) {
       setSelectedCountry(null)
       toggleAddNewCountry(true)
+      mutateCountries(page, limit)
     }
   }, [isOpen])
 
@@ -114,7 +124,13 @@ const Countries = () => {
           </tbody>
         </table>
       </div>
-
+      <div>
+        <PaginationButton
+          currentPage={page}
+          totalPages={total}
+          onPageChange={(page) => setPage(page)}
+        />
+      </div>
       <CountryModal
         isOpen={isOpen}
         toggle={toggle}
