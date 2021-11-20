@@ -62,7 +62,7 @@ const Pages = ({ pagesData }) => {
     setSelectedPage(pages.find((page) => page.id === id))
   }
   return (
-    <div className="flex flex-col relative bg-blueGray-200 text-blueGray-900 p-4 rounded-lg w-full">
+    <>
       <div className="w-full">
         <select
           className="select select-bordered w-full"
@@ -106,7 +106,7 @@ const Pages = ({ pagesData }) => {
           Update
         </button>
       </div>
-    </div>
+    </>
   )
 }
 

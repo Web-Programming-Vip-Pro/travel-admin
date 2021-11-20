@@ -82,7 +82,7 @@ const Countries = () => {
   if (isLoading) return <div>Loading...</div>
   if (isError) return <div>Error</div>
   return (
-    <div className="flex flex-col space-y-4 relative bg-blueGray-100 text-blueGray-900 p-4 rounded-lg w-full">
+    <>
       <div>
         <button className="btn btn-primary" onClick={() => toggle(true)}>
           Add
@@ -137,7 +137,7 @@ const Countries = () => {
         isAddNewCountry={isAddNewCountry}
         selectedCountry={selectedCountry}
       />
-    </div>
+    </>
   )
 }
 

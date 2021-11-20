@@ -82,7 +82,7 @@ const Cities = () => {
   if (error) return <div>failed to load data</div>
   if (isLoading) return <div>loading...</div>
   return (
-    <div className="flex flex-col space-y-4 relative bg-blueGray-100 text-blueGray-900 p-4 rounded-lg w-full">
+    <>
       <div>
         <button className="btn btn-success" onClick={handleAdd}>
           <i className="fas fa-plus mr-2"></i>
@@ -156,7 +156,7 @@ const Cities = () => {
           onPageChange={(page) => setPage(page)}
         />
       </div>
-    </div>
+    </>
   )
 }
 

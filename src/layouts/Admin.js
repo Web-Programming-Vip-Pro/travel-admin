@@ -24,7 +24,9 @@ export default function Admin({ children }) {
         <AdminNavbar />
         <HeaderStats />
         <div className="w-full px-4 mx-auto -m-24 md:px-10">
-          {children}
+          <div className="flex flex-col space-y-4 relative bg-blueGray-100 text-blueGray-900 p-4 rounded-lg w-full">
+            {children}
+          </div>
           <FooterAdmin />
         </div>
       </div>
