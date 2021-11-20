@@ -19,7 +19,7 @@ specifiers:
   gulp: 4.0.2
   gulp-append-prepend: 1.0.8
   next: 12.0.3
-  next-auth: ^4.0.0-beta.7
+  next-auth: 4.0.0-beta.6
   postcss: 8.3.11
   prettier: ^2.4.1
   react: ^17.0.2
@@ -53,7 +53,7 @@ dependencies:
   gulp: 4.0.2
   gulp-append-prepend: 1.0.8
   next: 12.0.3_react-dom@17.0.2+react@17.0.2
-  next-auth: 4.0.0-beta.7_react-dom@17.0.2+react@17.0.2
+  next-auth: 4.0.0-beta.6_react-dom@17.0.2+react@17.0.2
   react: 17.0.2
   react-chartjs-2: 3.3.0_chart.js@3.6.0+react@17.0.2
   react-dom: 17.0.2_react@17.0.2
@@ -4367,11 +4367,6 @@ packages:
 
   /cookie/0.4.0:
     resolution: {integrity: sha512-+Hp8fLp57wnUSt0tY0tHEXh4voZRDnoIrZPqlo3DPiI4y9lwg/jqx+1Om94/W6ZaPDOUbnjOt/99w66zk+l1Xg==}
-    engines: {node: '>= 0.6'}
-    dev: false
-
-  /cookie/0.4.1:
-    resolution: {integrity: sha512-ZwrFkGJxUR3EIoXtO+yVE69Eb7KlixbaeAWfBQB9vVsNn/o+Yw69gBWSSDK825hQNdN+wF8zELf3dFNl/kxkUA==}
     engines: {node: '>= 0.6'}
     dev: false
 
@@ -9014,8 +9009,8 @@ packages:
     resolution: {integrity: sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==}
     dev: false
 
-  /next-auth/4.0.0-beta.7_react-dom@17.0.2+react@17.0.2:
-    resolution: {integrity: sha512-bPoLak4MfmgrcLLaf26tEQttKJPBcP3KAtSXSo2xMhoG+PLnP9gwFmqLwFUX+FvVRf/iwuAUZjPRAqRQ9g3GOw==}
+  /next-auth/4.0.0-beta.6_react-dom@17.0.2+react@17.0.2:
+    resolution: {integrity: sha512-g2X0c2RGPt9xjEiGqR5g0Csth37F9+cVmoNWa0ek6j1OYP2M4P3ZQmJqCQBq+9486pMmMn/awQYr5bhcVOIMgg==}
     engines: {node: ^12.19.0 || ^14.15.0 || ^16.13.0}
     peerDependencies:
       nodemailer: ^6.6.5
@@ -9027,7 +9022,6 @@ packages:
     dependencies:
       '@babel/runtime': 7.16.0
       '@panva/hkdf': 1.0.1
-      cookie: 0.4.1
       jose: 4.3.7
       oauth: 0.9.15
       openid-client: 5.0.2

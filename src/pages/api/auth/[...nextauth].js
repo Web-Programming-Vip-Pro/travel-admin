@@ -48,5 +48,8 @@ export default NextAuth({
   jwt: {
     secret: 'secret',
   },
+  session: {
+    strategy: 'jwt',
+  },
   secret: 'secret',
 })
