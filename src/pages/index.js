@@ -1,17 +1,18 @@
-import Auth from '@/layouts/Auth.js'
+import { useRouter } from 'next/router'
+import { useSession } from 'next-auth/react'
 
-export async function getStaticProps() {
-  return {
-    redirect: {
-      destination: '/login',
-    },
+export default function Index() {
+  const router = useRouter()
+  const { data: session, status } = useSession()
+  console.log(session)
+  if (status !== 'loading') {
+    if (session) {
+      router.push('/dashboard')
+    } else {
+      if (window) {
+        window.location.href = '/api/auth/signin'
+      }
+    }
   }
-}
-
-const Index = () => {
   return <></>
 }
-
-export default Index
-
-Index.layout = Auth

@@ -1,0 +1,63 @@
+import { fetcher } from '@/utils'
+import axios from 'axios'
+import useSWR, { mutate } from 'swr'
+
+const ENDPOINT = process.env.NEXT_PUBLIC_ENDPOINT
+
+export function useCountries(page = 0, limit = 20) {
+  const { data, error } = useSWR(
+    `${ENDPOINT}/countries?page=${page}&limit=${limit}`,
+    fetcher
+  )
+  return {
+    countries: data && data.data,
+    isLoading: !error && !data,
+    isError: error,
+  }
+}
+
+export function useTotalCountries(limit) {
+  const { data, error } = useSWR(
+    `${ENDPOINT}/country/pages?limit=${limit}`,
+    fetcher
+  )
+  return {
+    total: data && data.data,
+    isLoading: !error && !data,
+    isError: error,
+  }
+}
+
+export async function addCountry(name) {
+  try {
+    const res = await axios.post(`${ENDPOINT}/country/add`, { name })
+    mutate(`${ENDPOINT}/countries`)
+    return { success: true, data: res.data }
+  } catch (error) {
+    return { success: false, error }
+  }
+}
+
+export async function updateCountry(id, name) {
+  try {
+    const res = await axios.post(`${ENDPOINT}/country/edit`, { id, name })
+    mutate(`${ENDPOINT}/countries`)
+    return { success: true, data: res.data }
+  } catch (error) {
+    return { success: false, error }
+  }
+}
+
+export async function deleteCountry(id) {
+  try {
+    const res = await axios.post(`${ENDPOINT}/country/delete`, { id })
+    mutate(`${ENDPOINT}/countries`)
+    return { success: true, data: res.data }
+  } catch (error) {
+    return { success: false, error }
+  }
+}
+
+export const mutateCountries = (page, limit) => {
+  mutate(`${ENDPOINT}/countries?page=${page}&limit=${limit}`)
+}

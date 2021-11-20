@@ -1,29 +1,13 @@
-import ReactDOM from 'react-dom'
 import Head from 'next/head'
-import Router from 'next/router'
-import PageChange from 'src/components/PageChange/PageChange.js'
-
 import '@fortawesome/fontawesome-free/css/all.min.css'
 import '@/styles/index.css'
+import '@fontsource/inter'
+import { SessionProvider } from 'next-auth/react'
 
-Router.events.on('routeChangeStart', (url) => {
-  console.log(`Loading: ${url}`)
-  document.body.classList.add('body-page-transition')
-  ReactDOM.render(
-    <PageChange path={url} />,
-    document.getElementById('page-transition')
-  )
-})
-Router.events.on('routeChangeComplete', () => {
-  ReactDOM.unmountComponentAtNode(document.getElementById('page-transition'))
-  document.body.classList.remove('body-page-transition')
-})
-Router.events.on('routeChangeError', () => {
-  ReactDOM.unmountComponentAtNode(document.getElementById('page-transition'))
-  document.body.classList.remove('body-page-transition')
-})
-
-export default function MyApp({ Component, pageProps }) {
+export default function MyApp({
+  Component,
+  pageProps: { session, ...pageProps },
+}) {
   const Layout = Component.layout || (({ children }) => <>{children}</>)
   return (
     <>
@@ -34,9 +18,11 @@ export default function MyApp({ Component, pageProps }) {
         />
         <title>Fleety Admin</title>
       </Head>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      <SessionProvider session={session}>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </SessionProvider>
     </>
   )
 }

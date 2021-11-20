@@ -1,5 +1,6 @@
 const plugin = require('tailwindcss/plugin')
 const colors = require('tailwindcss/colors')
+const defaultTheme = require('tailwindcss/defaultTheme')
 
 module.exports = {
   mode: 'jit',
@@ -71,6 +72,9 @@ module.exports = {
       backgroundSize: {
         full: '100%',
       },
+      fontFamily: {
+        sans: ['Inter', ...defaultTheme.fontFamily.sans],
+      },
     },
   },
   variants: [
@@ -88,6 +92,8 @@ module.exports = {
     'disabled',
   ],
   plugins: [
+    require('@tailwindcss/typography'),
+    require('daisyui'),
     require('@tailwindcss/forms'),
     plugin(function ({ addComponents, theme }) {
       const screens = theme('screens', {})
