@@ -15,27 +15,51 @@ export default function Sidebar() {
       active: true,
     },
     {
-      title: 'Settings',
-      icon: 'fas fa-tools',
-      link: '/dashboard/settings',
+      title: 'Users',
+      icon: 'fas fa-users',
+      link: '/dashboard/users',
       active: false,
     },
     {
-      title: 'Pages',
-      icon: 'fas fa-tools',
-      link: '/dashboard/pages',
+      title: 'Agencies',
+      icon: 'fas fa-user-tie',
+      link: '/dashboard/Agencies',
       active: false,
     },
     {
       title: 'Countries',
-      icon: 'fas fa-tools',
+      icon: 'fas fa-globe-europe',
       link: '/dashboard/countries',
       active: false,
     },
     {
       title: 'Cities',
-      icon: 'fas fa-tools',
+      icon: 'fas fa-city',
       link: '/dashboard/cities',
+      active: false,
+    },
+    {
+      title: 'Blogs',
+      icon: 'fas fa-blog',
+      link: '/dashboard/blogs',
+      active: false,
+    },
+    {
+      title: 'Pages',
+      icon: 'fas fa-pager',
+      link: '/dashboard/pages',
+      active: false,
+    },
+    {
+      title: 'Reports',
+      icon: 'fas fa-flag',
+      link: '/dashboard/reports',
+      active: false,
+    },
+    {
+      title: 'Settings',
+      icon: 'fas fa-tools',
+      link: '/dashboard/settings',
       active: false,
     },
   ])
@@ -97,7 +121,7 @@ export default function Sidebar() {
 
             <ul className="md:flex-col md:min-w-full flex flex-col list-none">
               {menus.map((menu, index) => (
-                <li key={index} className="items-center">
+                <li key={index} className="items-center hover:cursor-pointer">
                   <Link href={menu.link} passHref>
                     <p
                       className={`
