@@ -1,9 +1,7 @@
-import CardLineChart from '@/components/Shared/Cards/CardLineChart.js'
-import CardBarChart from '@/components/Shared/Cards/CardBarChart.js'
-import CardPageVisits from '@/components/Shared/Cards/CardPageVisits.js'
-import CardSocialTraffic from '@/components/Shared/Cards/CardSocialTraffic.js'
+import CardLineChart from '@/components/Shared/Cards/CardLineChart'
+import CardBarChart from '@/components/Shared/Cards/CardBarChart'
 
-import Admin from '@/layouts/Admin.js'
+import Admin from '@/layouts/Admin'
 
 export default function Dashboard() {
   return (
