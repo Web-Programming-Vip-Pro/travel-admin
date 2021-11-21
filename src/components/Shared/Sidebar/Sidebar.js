@@ -39,6 +39,12 @@ export default function Sidebar() {
       active: false,
     },
     {
+      title: 'Places',
+      icon: 'fas fa-paper-plane',
+      link: '/dashboard/places',
+      active: false,
+    },
+    {
       title: 'Blogs',
       icon: 'fas fa-blog',
       link: '/dashboard/blogs',

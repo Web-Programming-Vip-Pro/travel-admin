@@ -15,6 +15,18 @@ export function useCities(page = 0, limit = 20) {
   }
 }
 
+export function useCitiesByCountry(countryId) {
+  const { data, error } = useSWR(
+    `${ENDPOINT}/country/cities?country_id=${countryId}`,
+    fetcher
+  )
+  return {
+    cities: data && data.data,
+    isLoading: !error && !data,
+    error,
+  }
+}
+
 export function useTotalCities(limit = 20) {
   const { data, error } = useSWR(
     `${ENDPOINT}/city/pages?limit=${limit}`,
