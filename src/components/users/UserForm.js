@@ -1,11 +1,12 @@
 import { addUser, updateUser } from '@/services/user'
 import { useForm } from 'react-hook-form'
 
-const UserForm = ({ editUser }) => {
+const UserForm = ({ editUser, isAgency }) => {
   const { register, handleSubmit } = useForm({ defaultValues: editUser })
   const isEdited = editUser !== null
   async function onSubmit(data) {
     const user = { repassword: data.password, ...data }
+    user.role = isAgency ? 1 : 0
     const response = isEdited ? await updateUser(user) : await addUser(user)
     if (response.success) {
       alert(isEdited ? 'User updated' : 'User added')

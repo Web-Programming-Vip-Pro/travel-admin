@@ -23,7 +23,7 @@ export default function Sidebar() {
     {
       title: 'Agencies',
       icon: 'fas fa-user-tie',
-      link: '/dashboard/Agencies',
+      link: '/dashboard/agencies',
       active: false,
     },
     {
