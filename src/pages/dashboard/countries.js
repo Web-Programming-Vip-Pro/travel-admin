@@ -11,41 +11,63 @@ import {
 import { useEffect, useState } from 'react'
 import { useToggle } from 'react-use'
 import PaginationButton from '@/components/Shared/Pagination'
+import { useForm } from 'react-hook-form'
+import Table from '@/components/Shared/Table'
 
-function CountryModal({ isOpen, toggle, isAddNewCountry, selectedCountry }) {
-  const [name, setName] = useState(isAddNewCountry ? '' : selectedCountry.name)
-  function addOrUpdateCountry() {
-    if (isAddNewCountry) {
-      addCountry(name)
+function CountryModal({ isOpen, toggle, selectedCountry }) {
+  const isEdit = selectedCountry !== null
+  const { register, handleSubmit } = useForm({
+    defaultValues: selectedCountry,
+  })
+  async function onSubmit(data) {
+    const { name, image } = data
+    let response
+    if (!isEdit) {
+      response = await addCountry(name, image)
     } else {
-      updateCountry(selectedCountry.id, name)
+      response = await updateCountry(selectedCountry.id, name, image)
     }
-    toggle(false)
+    if (response.success) {
+      alert(isEdit ? 'Country updated' : 'Country added')
+      toggle()
+    } else {
+      alert(response.message)
+    }
   }
-  useEffect(() => {
-    setName(isAddNewCountry ? '' : selectedCountry.name)
-  }, [isOpen])
   return (
     <Modal isOpen={isOpen} toggle={toggle}>
       <Modal.Body>
-        <div className="form-control">
-          <label className="label">
-            <span className="label-text">Country Name</span>
-          </label>
-          <input
-            type="text"
-            placeholder="Name"
-            className="input"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-        </div>
+        <form
+          className="flex flex-col space-y-2"
+          onSubmit={handleSubmit(onSubmit)}
+        >
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Country Name</span>
+            </label>
+            <input
+              type="text"
+              placeholder="Name"
+              className="input input-primary input-bordered"
+              {...register('name', { required: true })}
+            />
+          </div>
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Image</span>
+            </label>
+            <input
+              type="text"
+              placeholder="Image URL"
+              className="input input-primary input-bordered"
+              {...register('image', { required: true })}
+            />
+          </div>
+          <button className="btn btn-primary" type="submit">
+            {!isEdit ? 'Add Country' : 'Update Country'}
+          </button>
+        </form>
       </Modal.Body>
-      <Modal.Action>
-        <button className="btn btn-primary" onClick={addOrUpdateCountry}>
-          {isAddNewCountry ? 'Add Country' : 'Update Country'}
-        </button>
-      </Modal.Action>
     </Modal>
   )
 }
@@ -56,12 +78,10 @@ const Countries = () => {
   const { countries, isLoading, isError } = useCountries(page, limit)
   const { total } = useTotalCountries(limit)
   const [selectedCountry, setSelectedCountry] = useState(null)
-  const [isAddNewCountry, toggleAddNewCountry] = useToggle(true)
 
-  function selectCountry(id, name) {
-    setSelectedCountry({ id, name })
+  function selectCountry(country) {
+    setSelectedCountry(country)
     toggle()
-    toggleAddNewCountry(false)
   }
   async function confirmAndRemove(id) {
     if (window.confirm('Are you sure?')) {
@@ -74,7 +94,6 @@ const Countries = () => {
   useEffect(() => {
     if (!isOpen) {
       setSelectedCountry(null)
-      toggleAddNewCountry(true)
       mutateCountries(page, limit)
     }
   }, [isOpen])
@@ -87,43 +106,41 @@ const Countries = () => {
         <button className="btn btn-primary" onClick={() => toggle(true)}>
           Add
         </button>
+        {isOpen && (
+          <CountryModal
+            isOpen={isOpen}
+            toggle={toggle}
+            selectedCountry={selectedCountry}
+          />
+        )}
       </div>
-      <div className="overflow-x-auto">
-        <table className="table w-full">
-          <thead>
-            <tr>
-              <th></th>
-              <th>Name</th>
-              <th>Edit</th>
-              <th>Delete</th>
+      <Table>
+        <Table.Head>
+          <th></th>
+          <th>Name</th>
+          <th>Image</th>
+        </Table.Head>
+        <Table.Body>
+          {countries.map((country, index) => (
+            <tr key={index}>
+              <Table.Row>{index}</Table.Row>
+              <Table.Row>{country.name}</Table.Row>
+              <Table.Row>
+                <img src={country.image} alt={country.name} className="w-12" />
+              </Table.Row>
+              <Table.Row>
+                <Table.EditButton onClick={() => selectCountry(country)} />
+              </Table.Row>
+              <Table.Row>
+                <Table.DeleteButton
+                  onClick={() => confirmAndRemove(country.id)}
+                />
+              </Table.Row>
             </tr>
-          </thead>
-          <tbody>
-            {countries.map((country, index) => (
-              <tr key={index}>
-                <th>{index}</th>
-                <td>{country.name}</td>
-                <td>
-                  <button
-                    className="btn btn-info btn-sm"
-                    onClick={() => selectCountry(country.id, country.name)}
-                  >
-                    Edit
-                  </button>
-                </td>
-                <td>
-                  <button
-                    className="btn btn-error btn-sm"
-                    onClick={() => confirmAndRemove(country.id)}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+          ))}
+        </Table.Body>
+      </Table>
+
       <div>
         <PaginationButton
           currentPage={page}
@@ -131,12 +148,6 @@ const Countries = () => {
           onPageChange={(page) => setPage(page)}
         />
       </div>
-      <CountryModal
-        isOpen={isOpen}
-        toggle={toggle}
-        isAddNewCountry={isAddNewCountry}
-        selectedCountry={selectedCountry}
-      />
     </>
   )
 }

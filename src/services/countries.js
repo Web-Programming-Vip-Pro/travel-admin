@@ -28,20 +28,22 @@ export function useTotalCountries(limit) {
   }
 }
 
-export async function addCountry(name) {
+export async function addCountry(name, image) {
   try {
-    const res = await axios.post(`${ENDPOINT}/country/add`, { name })
-    mutate(`${ENDPOINT}/countries`)
+    const res = await axios.post(`${ENDPOINT}/country/add`, { name, image })
     return { success: true, data: res.data }
   } catch (error) {
     return { success: false, error }
   }
 }
 
-export async function updateCountry(id, name) {
+export async function updateCountry(id, name, image) {
   try {
-    const res = await axios.post(`${ENDPOINT}/country/edit`, { id, name })
-    mutate(`${ENDPOINT}/countries`)
+    const res = await axios.post(`${ENDPOINT}/country/edit`, {
+      id,
+      name,
+      image,
+    })
     return { success: true, data: res.data }
   } catch (error) {
     return { success: false, error }
@@ -51,7 +53,6 @@ export async function updateCountry(id, name) {
 export async function deleteCountry(id) {
   try {
     const res = await axios.post(`${ENDPOINT}/country/delete`, { id })
-    mutate(`${ENDPOINT}/countries`)
     return { success: true, data: res.data }
   } catch (error) {
     return { success: false, error }
