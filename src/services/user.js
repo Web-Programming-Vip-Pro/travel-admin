@@ -31,18 +31,18 @@ export function useUsersPage(limit = 20) {
 export async function addUser(data) {
   try {
     const response = await axios.post(`${ENDPOINT}/user/add`, data)
-    return { success: true, data: response.data }
+    return { success: true, message: response.data }
   } catch (error) {
-    return { success: false, error: error.response.data }
+    return { success: false, message: error.response.data.data }
   }
 }
 
 export async function updateUser(user) {
   try {
     const response = await axios.post(`${ENDPOINT}/user/update`, user)
-    return { success: true, data: response.data }
+    return { success: true, message: response.data }
   } catch (error) {
-    return { success: false, error: error.response.data }
+    return { success: false, message: error.response.data }
   }
 }
 
