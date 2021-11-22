@@ -1,37 +1,58 @@
 import { useForm, useFieldArray } from 'react-hook-form'
 import { useCountries } from '@/services/countries'
 import { useCitiesByCountry } from '@/services/city'
-import { addPlace } from '@/services/places'
-import { useState } from 'react'
+import { usePlace, addPlace, editPlace } from '@/services/places'
+import { useEffect } from 'react'
 
-const PlaceForm = ({ editPlace }) => {
-  const isEdit = editPlace !== null
-  const { register, handleSubmit, watch, control } = useForm()
+const PlaceForm = ({ editedPlace }) => {
+  const isEdit = !!editedPlace
+  const {
+    place,
+    isLoading: isPlaceLoading,
+    error,
+  } = usePlace(editedPlace && editedPlace.id)
+  const { countries, isCountriesLoading, isError } = useCountries(0, -1)
+  const defaultValues = isEdit
+    ? { ...place, country: place && place.country.id }
+    : null
+  const { register, handleSubmit, watch, control, reset, getValues } = useForm({
+    defaultValues,
+  })
   const { fields, append, remove } = useFieldArray({
     control,
-    name: 'amentities',
+    name: 'amenities',
   })
-  const [error, setError] = useState(null)
-  const { countries, isCountriesLoading, isError } = useCountries(0, -1)
-  const { cities } = useCitiesByCountry(watch('country'))
-  async function onSubmit(data) {
-    setError(null)
-    // if (isEdit) return
-    const response = await addPlace(data)
-    if (response.success) {
-      return setError(false)
+  const { cities, isLoading: isCitiesLoading } = useCitiesByCountry(
+    watch('country')
+  )
+
+  useEffect(() => {
+    if (place && countries) {
+      reset({
+        ...getValues(),
+        ...place,
+        country: place && place.country.id,
+      })
     }
-    setError(response.message)
+  }, [isPlaceLoading, isCountriesLoading, isCitiesLoading, reset])
+
+  async function onSubmit(data) {
+    let response
+    if (isEdit) {
+      response = await editPlace(data)
+    } else {
+      response = await addPlace(data)
+    }
+    if (response.success) {
+      alert(isEdit ? 'Place updated' : 'Place added')
+    } else {
+      alert(response.message)
+    }
   }
-  if (isCountriesLoading) return <div>Loading...</div>
+  if (isCountriesLoading || isPlaceLoading) return <div>Loading...</div>
   if (isError) return <div>Error...</div>
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      {error !== null && <div className="alert alert-danger">{error}</div>}
-      {!error !== null && !isEdit && (
-        <div className="alert alert-success">Add success</div>
-      )}
-
       <div className="form-control">
         <label className="label">
           <span className="label-text">Title</span>
@@ -222,7 +243,9 @@ const PlaceForm = ({ editPlace }) => {
       </div>
 
       <div className="form-control mt-4">
-        <button className="btn btn-primary" type="submit"></button>
+        <button className="btn btn-primary" type="submit">
+          {isEdit ? 'Update' : 'Create'}
+        </button>
       </div>
     </form>
   )

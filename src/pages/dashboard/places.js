@@ -8,16 +8,18 @@ import {
   getPlaceType,
   usePlacePages,
   getPlaceStatus,
+  deletePlace,
+  mutatePlaces,
 } from '@/services/places'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useToggle } from 'react-use'
 
-function PlaceModal({ isOpen, toggle }) {
+function PlaceModal({ isOpen, toggle, editedPlace }) {
   return (
     <Modal isOpen={isOpen} toggle={toggle}>
       <Modal.Title className="text-2xl font-bold">Add Place</Modal.Title>
       <Modal.Body>
-        <PlaceForm />
+        <PlaceForm editedPlace={editedPlace} />
       </Modal.Body>
     </Modal>
   )
@@ -27,14 +29,33 @@ const Places = () => {
   const [page, setPage] = useState(0)
   const [type, setType] = useState(-1)
   const [order, setOrder] = useState('recent')
+  const [editedPlace, setEditedPlace] = useState(null)
   const [isModalOpen, toggleModal] = useToggle(false)
   const LIMIT = 10
   const { places, isLoading, error } = usePlaces(page, LIMIT, type, order)
   const { totalPages, isLoading: isPagesLoading } = usePlacePages(type, LIMIT)
+
+  async function handleEdit(id) {
+    setEditedPlace({ id })
+    toggleModal()
+  }
+
   async function handleDelete(id) {
     if (window.confirm('Are you sure?')) {
+      const response = await deletePlace(id)
+      if (response.success) {
+        alert('Place deleted')
+        mutatePlaces(page, LIMIT, type, order)
+      } else {
+        alert(response.message)
+      }
     }
   }
+
+  useEffect(() => {
+    mutatePlaces(page, LIMIT, type, order)
+    if (!isModalOpen) setEditedPlace(null)
+  }, [isModalOpen])
 
   if (isLoading || isPagesLoading) return <div>Loading...</div>
   if (error) return <div>Error!</div>
@@ -46,7 +67,11 @@ const Places = () => {
           Add
         </button>
       </div>
-      <PlaceModal isOpen={isModalOpen} toggle={toggleModal} />
+      <PlaceModal
+        isOpen={isModalOpen}
+        toggle={toggleModal}
+        editedPlace={editedPlace}
+      />
       <Table>
         <Table.Head>
           <td>Title</td>
@@ -76,10 +101,10 @@ const Places = () => {
               <Table.Row>{place.author.name}</Table.Row>
               <Table.Row>{place.created_at}</Table.Row>
               <Table.Row>
-                <Table.EditButton />
+                <Table.EditButton onClick={() => handleEdit(place.id)} />
               </Table.Row>
               <Table.Row>
-                <Table.DeleteButton />
+                <Table.DeleteButton onClick={() => handleDelete(place.id)} />
               </Table.Row>
             </tr>
           ))}

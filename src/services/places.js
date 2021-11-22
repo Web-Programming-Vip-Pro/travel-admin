@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { fetcher } from '@/utils'
-import useSWR from 'swr'
+import useSWR, { mutate } from 'swr'
 
 const ENDPOINT = process.env.NEXT_PUBLIC_ENDPOINT
 
@@ -11,6 +11,15 @@ export function usePlaces(page = 0, limit = 20, type = 0, order = 'recent') {
   )
   return {
     places: data && data.data,
+    isLoading: !error && !data,
+    error,
+  }
+}
+
+export function usePlace(id) {
+  const { data, error } = useSWR(`${ENDPOINT}/place?id=${id}`, fetcher)
+  return {
+    place: data && data.data,
     isLoading: !error && !data,
     error,
   }
@@ -31,19 +40,39 @@ export function usePlacePages(type = -1, limit = 20) {
 export async function addPlace(place) {
   try {
     const response = await axios.post(`${ENDPOINT}/place/add`, place)
-    return { success: true, data: response.data }
+    return { success: true, message: response.data }
   } catch (error) {
-    return { success: false, data: error }
+    return { success: false, message: error }
   }
 }
 
-export function deletePlace(id) {
+export async function editPlace(place) {
   try {
-    const response = axios.delete(`${ENDPOINT}/place/delete?id=${id}`)
-    return { success: true, data: response.data }
+    const response = await axios.post(`${ENDPOINT}/place/edit`, place)
+    return { success: true, message: response.data }
   } catch (error) {
-    return { success: false, data: error }
+    return { success: false, message: error }
   }
+}
+
+export async function deletePlace(id) {
+  try {
+    const response = await axios.post(`${ENDPOINT}/place/delete`, { id })
+    return { success: true, message: response.data }
+  } catch (error) {
+    return { success: false, message: error }
+  }
+}
+
+export async function mutatePlaces(
+  page = 0,
+  limit = 20,
+  type = 0,
+  order = 'recent'
+) {
+  mutate(
+    `${ENDPOINT}/places?page=${page}&limit=${limit}&type=${type}&order=${order}`
+  )
 }
 
 export function getPlaceType(type) {
