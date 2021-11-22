@@ -12,6 +12,7 @@ import CityForm from '@/components/city/CityForm'
 import Modal from '@/components/Shared/Modal'
 import { deleteCity } from '@/services/city'
 import PaginationButton from '@/components/Shared/Pagination'
+import Table from '@/components/Shared/Table'
 
 function CityModal({ isOpen, toggleModal, isEdit, editedCity }) {
   return (
@@ -97,58 +98,42 @@ const Cities = () => {
           />
         )}
       </div>
-      <div className="overflow-x-auto">
-        <table className="table w-full">
-          <thead>
-            <tr>
-              <th></th>
-              <th>Name</th>
-              <th>Country</th>
-              <th>Total Place</th>
-              <th>Description</th>
-              <th>Created At</th>
-              <th>Updated At</th>
-              <th>Edit</th>
-              <th>Delete</th>
+      <Table>
+        <Table.Head>
+          <th></th>
+          <th>Name</th>
+          <th>Country</th>
+          <th>Total Place</th>
+          <th>Description</th>
+          <th>Created At</th>
+          <th>Updated At</th>
+        </Table.Head>
+        <Table.Body>
+          {cities.map((city) => (
+            <tr key={city.id}>
+              <Table.Row>
+                <img
+                  src={city.image_cover}
+                  alt={city.name}
+                  className="w-12 h-12 rounded-full"
+                />
+              </Table.Row>
+              <Table.Row>{city.name}</Table.Row>
+              <Table.Row>{city.country.name}</Table.Row>
+              <Table.Row>{city.total_places}</Table.Row>
+              <Table.Row>{city.description}</Table.Row>
+              <Table.Row>{formatDate(city.created_at)}</Table.Row>
+              <Table.Row>{formatDate(city.updated_at)}</Table.Row>
+              <Table.Row>
+                <Table.EditButton onClick={() => handleEdit(city)} />
+              </Table.Row>
+              <Table.Row>
+                <Table.DeleteButton onClick={() => handleDelete(city.id)} />
+              </Table.Row>
             </tr>
-          </thead>
-          <tbody>
-            {cities.map((city) => (
-              <tr key={city.id}>
-                <td>
-                  <img
-                    src={city.image_cover}
-                    alt={city.name}
-                    className="w-12 h-12 rounded-full"
-                  />
-                </td>
-                <td>{city.name}</td>
-                <td>{city.country.name}</td>
-                <td>{city.total_places}</td>
-                <td>{shorten(city.description, 15)}</td>
-                <td>{formatDate(city.created_at)}</td>
-                <td>{formatDate(city.updated_at)}</td>
-                <td>
-                  <button
-                    className="btn btn-info btn-sm"
-                    onClick={() => handleEdit(city)}
-                  >
-                    Edit
-                  </button>
-                </td>
-                <td>
-                  <button
-                    className="btn btn-error btn-sm"
-                    onClick={() => handleDelete(city.id)}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+          ))}
+        </Table.Body>
+      </Table>
       <div>
         <Paginate
           currentPage={page}
