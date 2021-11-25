@@ -21,10 +21,8 @@ export default NextAuth({
             .post(`${url}/login`, credentials)
             .then((res) => res.data)
           const user = response.data
-          if (user.role === '2') {
-            return user
-          }
-          return null
+          if (user.role === '0') return null
+          return user
         } catch (err) {
           return null
         }
