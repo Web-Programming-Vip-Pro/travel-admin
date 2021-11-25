@@ -1,6 +1,8 @@
+import Input from '@/components/Shared/Input'
 import Modal from '@/components/Shared/Modal'
 import PaginationButton from '@/components/Shared/Pagination'
 import Table from '@/components/Shared/Table'
+import TableHeader from '@/components/Shared/Table/TableHeader'
 import UserForm from '@/components/users/UserForm'
 import Admin from '@/layouts/Admin'
 import {
@@ -26,22 +28,23 @@ const Agencies = () => {
   const [page, setPage] = useState(0)
   const [isModalOpen, toggleModal] = useToggle(false)
   const [editUser, setEditUser] = useState(null)
-  const LIMIT = 10
+  const [limit, setLimit] = useState(10)
+  const [searchText, setSearchText] = useState('')
   const ROLE = 1
-  const { totalPages, isLoading: isTotalPagesLoading } = useUsersPage(LIMIT)
-  const { users, loading, error } = useUsers(page, LIMIT, ROLE)
+  const { totalPages, isLoading: isTotalPagesLoading } = useUsersPage(limit)
+  const { users, loading, error } = useUsers(page, limit, ROLE, searchText)
   useEffect(() => {
     if (!isModalOpen) {
       setEditUser(null)
     }
-    mutateUsers(page, LIMIT, ROLE)
+    mutateUsers(page, limit, ROLE)
   }, [isModalOpen])
 
   async function handleDelete(id) {
     if (window.confirm('Are you sure?')) {
       const response = await deleteUser(id)
       if (response.success) {
-        mutateUsers(page, LIMIT, ROLE)
+        mutateUsers(page, limit, ROLE)
         alert('User deleted!')
       } else {
         alert(response.message)
@@ -58,11 +61,11 @@ const Agencies = () => {
   return (
     <>
       <h1 className="text-2xl font-bold">Users</h1>
-      <div>
-        <button className="btn btn-success" onClick={toggleModal}>
-          Add
-        </button>
-      </div>
+      <TableHeader
+        setLimit={setLimit}
+        setSearchText={setSearchText}
+        toggleModal={toggleModal}
+      />
       <UserModal
         isOpen={isModalOpen}
         toggle={toggleModal}
