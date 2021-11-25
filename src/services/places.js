@@ -4,11 +4,17 @@ import useSWR, { mutate } from 'swr'
 
 const ENDPOINT = process.env.NEXT_PUBLIC_ENDPOINT
 
-export function usePlaces(page = 0, limit = 20, type = 0, order = 'recent') {
-  const { data, error } = useSWR(
-    `${ENDPOINT}/places?page=${page}&limit=${limit}&type=${type}&order=${order}`,
-    fetcher
-  )
+export function usePlaces(
+  page = 0,
+  limit = 20,
+  type = 0,
+  order = 'recent',
+  text = null
+) {
+  const url = `${ENDPOINT}/places?page=${page}&limit=${limit}&type=${type}&order=${order}${
+    text ? `&text=${text}` : ''
+  }`
+  const { data, error } = useSWR(url, fetcher)
   return {
     places: data && data.data,
     isLoading: !error && !data,
@@ -25,9 +31,11 @@ export function usePlace(id) {
   }
 }
 
-export function usePlacePages(type = -1, limit = 20) {
+export function usePlacePages(type = -1, limit = 20, text = null) {
   const { data, error } = useSWR(
-    `${ENDPOINT}/place/pages?type=${type}&limit=${limit}`,
+    `${ENDPOINT}/place/pages?type=${type}&limit=${limit}${
+      text ? `&text=${text}` : ''
+    }`,
     fetcher
   )
   return {
@@ -68,11 +76,13 @@ export async function mutatePlaces(
   page = 0,
   limit = 20,
   type = 0,
-  order = 'recent'
+  order = 'recent',
+  text = null
 ) {
-  mutate(
-    `${ENDPOINT}/places?page=${page}&limit=${limit}&type=${type}&order=${order}`
-  )
+  const url = `${ENDPOINT}/places?page=${page}&limit=${limit}&type=${type}&order=${order}${
+    text ? `&text=${text}` : ''
+  }`
+  mutate(url)
 }
 
 export function getPlaceType(type) {
