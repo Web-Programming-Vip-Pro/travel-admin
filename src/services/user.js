@@ -3,9 +3,12 @@ import axios from 'axios'
 import useSWR, { mutate } from 'swr'
 const ENDPOINT = `${process.env.NEXT_PUBLIC_ENDPOINT}`
 
-export function useUsers(page = 0, limit = 20, role = 0) {
+export function useUsers(page = 0, limit = 20, role = 0, text = null) {
+  if (text === '') text = null
   const { data, error } = useSWR(
-    `${ENDPOINT}/users?page=${page}&limit=${limit}&role=${role}`,
+    `${ENDPOINT}/users?page=${page}&limit=${limit}&role=${role}${
+      text ? `&text=${text}` : ''
+    }`,
     fetcher
   )
   return {
