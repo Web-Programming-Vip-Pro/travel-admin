@@ -37,7 +37,7 @@ const Users = () => {
     if (!isModalOpen) {
       setEditUser(null)
     }
-    mutateUsers(page, limit)
+    mutateUsers(page, limit, ROLE, searchText)
   }, [isModalOpen])
 
   async function handleDelete(id) {

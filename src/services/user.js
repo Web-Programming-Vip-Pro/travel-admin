@@ -60,6 +60,10 @@ export async function deleteUser(id) {
   }
 }
 
-export function mutateUsers(page = 0, limit = 20, role = 0) {
-  mutate(`${ENDPOINT}/users?page=${page}&limit=${limit}&role=${role}`)
+export function mutateUsers(page = 0, limit = 20, role = 0, text = null) {
+  mutate(
+    `${ENDPOINT}/users?page=${page}&limit=${limit}&role=${role}${
+      text ? `&text=${text}` : ''
+    }`
+  )
 }
