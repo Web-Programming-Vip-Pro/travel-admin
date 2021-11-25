@@ -77,12 +77,10 @@ const Places = () => {
           <td>Title</td>
           <td>City</td>
           <td>Type</td>
-          <td>Status</td>
           <td>Price</td>
           <td>Location</td>
           <td>Stars</td>
           <td>Reviews</td>
-          <td>Status</td>
           <td>Author</td>
           <td>Created At</td>
         </Table.Head>
@@ -92,12 +90,10 @@ const Places = () => {
               <Table.Row>{place.title}</Table.Row>
               <Table.Row>{place.city.name}</Table.Row>
               <Table.Row>{getPlaceType(place.type)}</Table.Row>
-              <Table.Row>{getPlaceStatus(place.status)}</Table.Row>
               <Table.Row>{place.price}</Table.Row>
               <Table.Row>{place.location}</Table.Row>
               <Table.Row>{place.stars}</Table.Row>
               <Table.Row>{place.reviews}</Table.Row>
-              <Table.Row>{place.status}</Table.Row>
               <Table.Row>{place.author.name}</Table.Row>
               <Table.Row>{place.created_at}</Table.Row>
               <Table.Row>

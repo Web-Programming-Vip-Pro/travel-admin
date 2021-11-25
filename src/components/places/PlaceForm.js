@@ -147,19 +147,6 @@ const PlaceForm = ({ editedPlace }) => {
       </div>
       <div className="form-control">
         <label className="label">
-          <span className="label-text">Status</span>
-        </label>
-        <select
-          className="input input-primary input-bordered"
-          {...register('status', { required: true })}
-        >
-          <option value="0">Pending</option>
-          <option value="1">Approved</option>
-          <option value="2">Rejected</option>
-        </select>
-      </div>
-      <div className="form-control">
-        <label className="label">
           <span className="label-text">Agency ID</span>
         </label>
         <input
