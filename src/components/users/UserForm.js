@@ -42,18 +42,6 @@ const UserForm = ({ editUser, isAgency }) => {
       </div>
       <div className="form-control">
         <label className="label">
-          <span className="label-text">Password</span>
-        </label>
-        <input
-          type="password"
-          placeholder="Password"
-          className="input input-primary input-bordered"
-          required
-          {...register('password', { required: true })}
-        />
-      </div>
-      <div className="form-control">
-        <label className="label">
           <span className="label-text">Avatar</span>
         </label>
         <input
@@ -121,7 +109,7 @@ const UserForm = ({ editUser, isAgency }) => {
           />
         </div>
       </div>
-      <div className="form-control mt-4">
+      <div className="mt-4 form-control">
         <button className="btn btn-primary" type="submit">
           {isEdited ? 'Update' : 'Add'}
         </button>
