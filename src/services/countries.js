@@ -4,9 +4,12 @@ import useSWR, { mutate } from 'swr'
 
 const ENDPOINT = process.env.NEXT_PUBLIC_ENDPOINT
 
-export function useCountries(page = 0, limit = 20) {
+export function useCountries(page = 0, limit = 20, text = null) {
+  if (text === '') text = null
   const { data, error } = useSWR(
-    `${ENDPOINT}/countries?page=${page}&limit=${limit}`,
+    `${ENDPOINT}/countries?page=${page}&limit=${limit}${
+      text ? `&text=${text}` : ''
+    }`,
     fetcher
   )
   return {
@@ -59,6 +62,10 @@ export async function deleteCountry(id) {
   }
 }
 
-export const mutateCountries = (page, limit) => {
-  mutate(`${ENDPOINT}/countries?page=${page}&limit=${limit}`)
+export const mutateCountries = (page = 0, limit = 10, text = null) => {
+  mutate(
+    `${ENDPOINT}/countries?page=${page}&limit=${limit}${
+      text ? `&text=${text}` : ''
+    }`
+  )
 }

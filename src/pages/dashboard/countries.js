@@ -13,6 +13,7 @@ import { useToggle } from 'react-use'
 import PaginationButton from '@/components/Shared/Pagination'
 import { useForm } from 'react-hook-form'
 import Table from '@/components/Shared/Table'
+import TableHeader from '@/components/Shared/Table/TableHeader'
 
 function CountryModal({ isOpen, toggle, selectedCountry }) {
   const isEdit = selectedCountry !== null
@@ -74,8 +75,13 @@ function CountryModal({ isOpen, toggle, selectedCountry }) {
 
 const Countries = () => {
   const [page, setPage] = useState(0)
-  const limit = 10
-  const { countries, isLoading, isError } = useCountries(page, limit)
+  const [limit, setLimit] = useState(10)
+  const [searchText, setSearchText] = useState('')
+  const { countries, isLoading, isError } = useCountries(
+    page,
+    limit,
+    searchText
+  )
   const { total } = useTotalCountries(limit)
   const [selectedCountry, setSelectedCountry] = useState(null)
 
@@ -87,25 +93,26 @@ const Countries = () => {
     if (window.confirm('Are you sure?')) {
       await deleteCountry(id)
       alert('Country deleted')
-      mutateCountries(page, limit)
+      mutateCountries(page, limit, searchText)
     }
   }
   const [isOpen, toggle] = useToggle(false)
   useEffect(() => {
     if (!isOpen) {
       setSelectedCountry(null)
-      mutateCountries(page, limit)
+      mutateCountries(page, limit, searchText)
     }
   }, [isOpen])
 
-  if (isLoading) return <div>Loading...</div>
   if (isError) return <div>Error</div>
   return (
     <>
       <div>
-        <button className="btn btn-primary" onClick={() => toggle(true)}>
-          Add
-        </button>
+        <TableHeader
+          toggleModal={toggle}
+          setLimit={setLimit}
+          setSearchText={setSearchText}
+        />
         {isOpen && (
           <CountryModal
             isOpen={isOpen}
@@ -114,40 +121,50 @@ const Countries = () => {
           />
         )}
       </div>
-      <Table>
-        <Table.Head>
-          <th></th>
-          <th>Name</th>
-          <th>Image</th>
-        </Table.Head>
-        <Table.Body>
-          {countries.map((country, index) => (
-            <tr key={index}>
-              <Table.Row>{index}</Table.Row>
-              <Table.Row>{country.name}</Table.Row>
-              <Table.Row>
-                <img src={country.image} alt={country.name} className="w-12" />
-              </Table.Row>
-              <Table.Row>
-                <Table.EditButton onClick={() => selectCountry(country)} />
-              </Table.Row>
-              <Table.Row>
-                <Table.DeleteButton
-                  onClick={() => confirmAndRemove(country.id)}
-                />
-              </Table.Row>
-            </tr>
-          ))}
-        </Table.Body>
-      </Table>
+      {!isLoading ? (
+        <>
+          <Table>
+            <Table.Head>
+              <th></th>
+              <th>Name</th>
+              <th>Image</th>
+            </Table.Head>
+            <Table.Body>
+              {countries.map((country, index) => (
+                <tr key={index}>
+                  <Table.Row>{index}</Table.Row>
+                  <Table.Row>{country.name}</Table.Row>
+                  <Table.Row>
+                    <img
+                      src={country.image}
+                      alt={country.name}
+                      className="w-12"
+                    />
+                  </Table.Row>
+                  <Table.Row>
+                    <Table.EditButton onClick={() => selectCountry(country)} />
+                  </Table.Row>
+                  <Table.Row>
+                    <Table.DeleteButton
+                      onClick={() => confirmAndRemove(country.id)}
+                    />
+                  </Table.Row>
+                </tr>
+              ))}
+            </Table.Body>
+          </Table>
 
-      <div>
-        <PaginationButton
-          currentPage={page}
-          totalPages={total}
-          onPageChange={(page) => setPage(page)}
-        />
-      </div>
+          <div>
+            <PaginationButton
+              currentPage={page}
+              totalPages={total}
+              onPageChange={(page) => setPage(page)}
+            />
+          </div>
+        </>
+      ) : (
+        <div>Is loading...</div>
+      )}
     </>
   )
 }
