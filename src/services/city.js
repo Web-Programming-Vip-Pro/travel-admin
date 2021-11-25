@@ -3,9 +3,12 @@ import axios from 'axios'
 import useSWR, { mutate } from 'swr'
 const ENDPOINT = process.env.NEXT_PUBLIC_ENDPOINT
 
-export function useCities(page = 0, limit = 20) {
+export function useCities(page = 0, limit = 20, text = null) {
+  if (text === '') text = null
   const { data, error } = useSWR(
-    `${ENDPOINT}/cities?page=${page}&limit=${limit}`,
+    `${ENDPOINT}/cities?page=${page}&limit=${limit}${
+      text ? `&text=${text}` : ''
+    }`,
     fetcher
   )
   return {
@@ -72,8 +75,13 @@ export async function updateCity(id, city) {
   }
 }
 
-export function mutateCities(page = 0, limit = 20) {
-  mutate(`${ENDPOINT}/cities?page=${page}&limit=${limit}`)
+export function mutateCities(page = 0, limit = 20, text = null) {
+  if (text === '') text = null
+  mutate(
+    `${ENDPOINT}/cities?page=${page}&limit=${limit}${
+      text ? `&text=${text}` : ''
+    }`
+  )
 }
 export function mutateTotalCities(limit = 20) {
   mutate(`${ENDPOINT}/city/pages?limit=${limit}`)
