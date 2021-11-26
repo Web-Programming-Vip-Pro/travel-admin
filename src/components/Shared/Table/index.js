@@ -1,12 +1,12 @@
 import { shorten } from '@/utils'
 
-function Head({ children }) {
+function Head({ children, disableEdit, disableDelete }) {
   return (
     <thead>
       <tr>
         {children}
-        <th>Edit</th>
-        <th>Delete</th>
+        {!disableEdit && <th>Edit</th>}
+        {!disableDelete && <th>Delete</th>}
       </tr>
     </thead>
   )
