@@ -35,7 +35,7 @@
   "scripts": {
     "start": "next start",
     "build": "next build",
-    "dev": "next dev",
+    "dev": "next dev -p 4000",
     "format": "prettier --write ."
   },
   "eslintConfig": {

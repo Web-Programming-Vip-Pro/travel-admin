@@ -45,6 +45,12 @@ export default function Sidebar() {
       active: false,
     },
     {
+      title: 'Transactions',
+      icon: 'fas fa-money-check',
+      link: '/dashboard/transactions',
+      active: false,
+    },
+    {
       title: 'Pages',
       icon: 'fas fa-pager',
       link: '/dashboard/pages',
