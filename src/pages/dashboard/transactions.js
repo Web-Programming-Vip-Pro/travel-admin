@@ -54,7 +54,7 @@ function TransactionModal({ isOpen, toggle, transaction }) {
               <option value={0}>Waiting for confirmation</option>
               <option value={1}>Booking</option>
               <option value={2}>Cancelled</option>
-              <option value={2}>Finished</option>
+              <option value={3}>Finished</option>
             </select>
           </div>
           <div className="flex flex-col form-group">
