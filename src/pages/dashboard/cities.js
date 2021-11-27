@@ -14,6 +14,22 @@ import { deleteCity } from '@/services/city'
 import PaginationButton from '@/components/Shared/Pagination'
 import Table from '@/components/Shared/Table'
 import TableHeader from '@/components/Shared/Table/TableHeader'
+import { getSession } from 'next-auth/react'
+
+export const getServerSideProps = async (ctx) => {
+  const session = await getSession(ctx)
+  const role = session && session.user && parseInt(session.user.role)
+  if (role === 1) {
+    return {
+      redirect: {
+        destination: '/dashboard/places',
+      },
+    }
+  }
+  return {
+    props: {},
+  }
+}
 
 function CityModal({ isOpen, toggleModal, isEdit, editedCity }) {
   return (

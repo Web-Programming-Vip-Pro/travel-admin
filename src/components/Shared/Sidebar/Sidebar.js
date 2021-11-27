@@ -3,9 +3,12 @@ import Link from 'next/link'
 import NotificationDropdown from '@/components/Shared/Dropdowns/NotificationDropdown.js'
 import UserDropdown from '@/components/Shared/Dropdowns/UserDropdown.js'
 import { useMenuSidebar } from '@/hooks/useMenuSidebar'
+import { useSession } from 'next-auth/react'
 
 export default function Sidebar() {
   const [collapseShow, setCollapseShow] = useState('hidden')
+  const { data } = useSession()
+  const user = data && data.user
   const { menus } = useMenuSidebar([
     {
       title: 'Users',
@@ -76,7 +79,9 @@ export default function Sidebar() {
             <i className="fas fa-bars"></i>
           </button>
           <p className="inline-block p-4 px-0 mr-0 text-sm font-bold text-left uppercase md:block md:pb-2 text-blueGray-600 whitespace-nowrap">
-            <Link href="/dashboard">Fleety Admin</Link>
+            <Link href="/dashboard">
+              <>Fleety {user && user.role === '0' ? 'Admin' : 'Agency'}</>
+            </Link>
           </p>
           <ul className="flex flex-wrap items-center list-none md:hidden">
             <li className="relative inline-block">

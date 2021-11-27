@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import { useSession } from 'next-auth/react'
 
 export function useMenuSidebar(defaultState) {
-  const { data, status } = useSession()
+  const { data } = useSession()
   const user = data && data.user
   const role = user && parseInt(user.role)
   const [menus, setMenus] = useState(defaultState)

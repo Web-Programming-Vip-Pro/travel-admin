@@ -13,6 +13,22 @@ import {
 } from '@/services/user'
 import { useEffect, useState } from 'react'
 import { useToggle } from 'react-use'
+import { getSession } from 'next-auth/react'
+
+export const getServerSideProps = async (ctx) => {
+  const session = await getSession(ctx)
+  const role = session && session.user && parseInt(session.user.role)
+  if (role === 1) {
+    return {
+      redirect: {
+        destination: '/dashboard/places',
+      },
+    }
+  }
+  return {
+    props: {},
+  }
+}
 
 function UserModal({ isOpen, toggle, editUser }) {
   return (
