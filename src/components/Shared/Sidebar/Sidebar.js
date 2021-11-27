@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import Link from 'next/link'
-
 import NotificationDropdown from '@/components/Shared/Dropdowns/NotificationDropdown.js'
 import UserDropdown from '@/components/Shared/Dropdowns/UserDropdown.js'
 import { useMenuSidebar } from '@/hooks/useMenuSidebar'
@@ -13,54 +12,56 @@ export default function Sidebar() {
       icon: 'fas fa-users',
       link: '/dashboard/users',
       active: false,
+      isAdmin: true,
     },
     {
       title: 'Agencies',
       icon: 'fas fa-user-tie',
       link: '/dashboard/agencies',
       active: false,
+      isAdmin: true,
     },
     {
       title: 'Countries',
       icon: 'fas fa-globe-europe',
       link: '/dashboard/countries',
       active: false,
+      isAdmin: true,
     },
     {
       title: 'Cities',
       icon: 'fas fa-city',
       link: '/dashboard/cities',
       active: false,
+      isAdmin: true,
     },
     {
       title: 'Places',
       icon: 'fas fa-paper-plane',
       link: '/dashboard/places',
       active: false,
+      isAdmin: false,
     },
     {
       title: 'Transactions',
       icon: 'fas fa-money-check',
       link: '/dashboard/transactions',
       active: false,
+      isAdmin: false,
     },
     {
       title: 'Pages',
       icon: 'fas fa-pager',
       link: '/dashboard/pages',
       active: false,
-    },
-    {
-      title: 'Reports',
-      icon: 'fas fa-flag',
-      link: '/dashboard/reports',
-      active: false,
+      isAdmin: true,
     },
     {
       title: 'Settings',
       icon: 'fas fa-tools',
       link: '/dashboard/settings',
       active: false,
+      isAdmin: false,
     },
   ])
   return (
