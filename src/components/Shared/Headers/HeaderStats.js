@@ -1,9 +1,11 @@
-import { useState } from 'react'
 import CardStats from '@/components/Shared/Cards/CardStats.js'
 import { useStats } from '@/services/stats'
+import { useSession } from 'next-auth/react'
 
 export default function HeaderStats() {
-  const { stats, isLoading, error } = useStats()
+  const { data } = useSession()
+  const role = data && data.user && parseInt(data.user.role)
+  const { stats } = useStats()
   return (
     <>
       <div className="relative pt-12 pb-32 bg-blueGray-800 md:pt-32">
@@ -23,13 +25,15 @@ export default function HeaderStats() {
                 statPercentColor="text-emerald-500"
                 statIconColor="bg-lightBlue-500"
               />
-              <CardStats
-                statSubtitle="TOTAL AGENCIES"
-                statTitle={`${stats && stats.totalAgencies}`}
-                statPercentColor="text-emerald-500"
-                statIconName="fas fa-user-tie"
-                statIconColor="bg-red-500"
-              />
+              {role === 0 && (
+                <CardStats
+                  statSubtitle="TOTAL AGENCIES"
+                  statTitle={`${stats && stats.totalAgencies}`}
+                  statPercentColor="text-emerald-500"
+                  statIconName="fas fa-user-tie"
+                  statIconColor="bg-red-500"
+                />
+              )}
               <CardStats
                 statSubtitle="TOTAL USERS"
                 statTitle={`${stats && stats.totalUsers}`}

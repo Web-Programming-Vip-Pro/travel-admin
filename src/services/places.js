@@ -9,9 +9,10 @@ export function usePlaces(
   limit = 20,
   type = 0,
   order = 'recent',
-  text = null
+  text = null,
+  author_id = -1
 ) {
-  const url = `${ENDPOINT}/places?page=${page}&limit=${limit}&type=${type}&order=${order}${
+  const url = `${ENDPOINT}/places?page=${page}&limit=${limit}&type=${type}&author_id=${author_id}&order=${order}${
     text ? `&text=${text}` : ''
   }`
   const { data, error } = useSWR(url, fetcher)
@@ -31,9 +32,14 @@ export function usePlace(id) {
   }
 }
 
-export function usePlacePages(type = -1, limit = 20, text = null) {
+export function usePlacePages(
+  type = -1,
+  limit = 20,
+  text = null,
+  author_id = -1
+) {
   const { data, error } = useSWR(
-    `${ENDPOINT}/place/pages?type=${type}&limit=${limit}${
+    `${ENDPOINT}/place/pages?type=${type}&limit=${limit}&author_id=${author_id}${
       text ? `&text=${text}` : ''
     }`,
     fetcher
