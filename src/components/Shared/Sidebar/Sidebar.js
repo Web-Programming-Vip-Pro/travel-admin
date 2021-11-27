@@ -9,12 +9,6 @@ export default function Sidebar() {
   const [collapseShow, setCollapseShow] = useState('hidden')
   const { menus } = useMenuSidebar([
     {
-      title: 'Dashboard',
-      icon: 'fas fa-tv',
-      link: '/dashboard',
-      active: true,
-    },
-    {
       title: 'Users',
       icon: 'fas fa-users',
       link: '/dashboard/users',
