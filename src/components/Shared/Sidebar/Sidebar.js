@@ -4,6 +4,7 @@ import NotificationDropdown from '@/components/Shared/Dropdowns/NotificationDrop
 import UserDropdown from '@/components/Shared/Dropdowns/UserDropdown.js'
 import { useMenuSidebar } from '@/hooks/useMenuSidebar'
 import { useSession } from 'next-auth/react'
+import { isAdmin } from '@/utils'
 
 export default function Sidebar() {
   const [collapseShow, setCollapseShow] = useState('hidden')
@@ -80,7 +81,7 @@ export default function Sidebar() {
           </button>
           <p className="inline-block p-4 px-0 mr-0 text-sm font-bold text-left uppercase md:block md:pb-2 text-blueGray-600 whitespace-nowrap">
             <Link href="/dashboard">
-              <>Fleety {user && user.role === '0' ? 'Admin' : 'Agency'}</>
+              <>Fleety {isAdmin(user) ? 'Admin' : 'Agency'}</>
             </Link>
           </p>
           <ul className="flex flex-wrap items-center list-none md:hidden">
@@ -102,7 +103,9 @@ export default function Sidebar() {
               <div className="flex flex-wrap">
                 <div className="w-6/12">
                   <p className="inline-block p-4 px-0 mr-0 text-sm font-bold text-left uppercase md:block md:pb-2 text-blueGray-600 whitespace-nowrap">
-                    <Link href="/dashboard">Fleety Admin</Link>
+                    <Link href="/dashboard">
+                      <> Fleety {isAdmin(user) ? 'Admin' : 'Agency'}</>
+                    </Link>
                   </p>
                 </div>
                 <div className="flex justify-end w-6/12">

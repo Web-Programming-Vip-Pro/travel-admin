@@ -4,9 +4,9 @@ import axios from 'axios'
 
 const ENDPOINT = `${process.env.NEXT_PUBLIC_ENDPOINT}`
 
-export function useTransactions(page = 0, limit = 10) {
+export function useTransactions(page = 0, limit = 10, agency_id = -1) {
   const { data, error } = useSWR(
-    `${ENDPOINT}/transactions?page=${page}&limit=${limit}`,
+    `${ENDPOINT}/transactions?page=${page}&limit=${limit}&agency_id=${agency_id}`,
     fetcher
   )
   return {
@@ -30,8 +30,11 @@ export async function updateTransaction(id, status_place, message) {
   }
 }
 
-export function mutateTransactions(page = 0, limit = 10) {
-  mutate(`${ENDPOINT}/transactions?page=${page}&limit=${limit}`)
+export function mutateTransactions(page = 0, limit = 10, agency_id = -1) {
+  mutate(
+    `${ENDPOINT}/transactions?page=${page}&limit=${limit}&agency_id=${agency_id}`,
+    null
+  )
 }
 
 export function getTransactionStatus(status) {

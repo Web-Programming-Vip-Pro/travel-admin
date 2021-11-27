@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { useSession } from 'next-auth/react'
+import { isAdmin } from '@/utils'
 
 export function useMenuSidebar(defaultState) {
   const { data } = useSession()
   const user = data && data.user
-  const role = user && parseInt(user.role)
+
   const [menus, setMenus] = useState(defaultState)
   const router = useRouter()
   useEffect(() => {
@@ -13,7 +14,7 @@ export function useMenuSidebar(defaultState) {
       menus
         .map((menu) => {
           menu.active = menu.link === router.pathname
-          if (role && role === 0) {
+          if (user && isAdmin(user)) {
             return menu
           } else {
             return menu.isAdmin ? null : menu

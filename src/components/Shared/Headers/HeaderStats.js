@@ -1,10 +1,11 @@
 import CardStats from '@/components/Shared/Cards/CardStats.js'
 import { useStats } from '@/services/stats'
+import { isAdmin } from '@/utils'
 import { useSession } from 'next-auth/react'
 
 export default function HeaderStats() {
   const { data } = useSession()
-  const role = data && data.user && parseInt(data.user.role)
+  const user = data && data.user
   const { stats } = useStats()
   return (
     <>
@@ -25,7 +26,7 @@ export default function HeaderStats() {
                 statPercentColor="text-emerald-500"
                 statIconColor="bg-lightBlue-500"
               />
-              {role === 0 && (
+              {isAdmin(user) && (
                 <CardStats
                   statSubtitle="TOTAL AGENCIES"
                   statTitle={`${stats && stats.totalAgencies}`}

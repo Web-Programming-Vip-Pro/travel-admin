@@ -11,6 +11,7 @@ import { useEffect, useState } from 'react'
 import { useToggle } from 'react-use'
 import Modal from '@/components/Shared/Modal'
 import { useForm } from 'react-hook-form'
+import { useSession } from 'next-auth/react'
 
 function TransactionModal({ isOpen, toggle, transaction }) {
   const { register, handleSubmit } = useForm({
@@ -84,9 +85,13 @@ function TransactionModal({ isOpen, toggle, transaction }) {
 const Transactions = () => {
   const [page, setPage] = useState(0)
   const [limit, setLimit] = useState(10)
+  const { data: session } = useSession()
+  const role = session?.user?.role
+  const agencyId = role === 0 ? -1 : session?.user?.id
   const { transactions, totalPages, isLoading, error } = useTransactions(
     page,
-    limit
+    limit,
+    agencyId
   )
   const [isOpen, toggle] = useToggle(false)
   const [transaction, setTransaction] = useState({})
@@ -95,14 +100,25 @@ const Transactions = () => {
     if (!isOpen) {
       setTransaction({})
     }
-    mutateTransactions(page, limit)
+    mutateTransactions(page, limit, agencyId)
   }, [isOpen])
 
-  if (isLoading) return <div>Loading...</div>
-  if (error) return <div>Error!</div>
+  if (error) return <div>No transactions found</div>
   return (
     <>
       <h1 className="text-2xl font-bold">Transaction</h1>
+      <div>
+        <div className="flex items-center space-x-2">
+          <p>Show</p>
+          <select className="select" onChange={(e) => setLimit(e.target.value)}>
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+          </select>
+          <p>values</p>
+        </div>
+      </div>
       {isOpen && (
         <TransactionModal
           isOpen={isOpen}
@@ -110,43 +126,48 @@ const Transactions = () => {
           transaction={transaction}
         />
       )}
-      <Table>
-        <Table.Head disableDelete>
-          <th>ID</th>
-          <th>Place</th>
-          <th>Value</th>
-          <th>Status</th>
-          <th>Agency</th>
-          <th>User</th>
-        </Table.Head>
-        <Table.Body>
-          {transactions.map((transaction, index) => (
-            <tr key={index}>
-              <td>{transaction.id}</td>
-              <td>{transaction.place_title}</td>
-              <td>{transaction.value}</td>
-              <td>{getTransactionStatus(transaction.status_place)}</td>
-              <td>{transaction.agency_name}</td>
-              <td>{transaction.user_name}</td>
-              <td>
-                <Table.EditButton
-                  onClick={() => {
-                    setTransaction(transaction)
-                    toggle()
-                  }}
-                />
-              </td>
-            </tr>
-          ))}
-        </Table.Body>
-      </Table>
-      <div>
-        <PaginationButton
-          currentPage={page}
-          totalPages={totalPages}
-          setPage={setPage}
-        />
-      </div>
+      {isLoading && <div>Loading...</div>}
+      {transactions && (
+        <>
+          <Table>
+            <Table.Head disableDelete>
+              <th>ID</th>
+              <th>Place</th>
+              <th>Value</th>
+              <th>Status</th>
+              <th>Agency</th>
+              <th>User</th>
+            </Table.Head>
+            <Table.Body>
+              {transactions.map((transaction, index) => (
+                <tr key={index}>
+                  <td>{transaction.id}</td>
+                  <td>{transaction.place_title}</td>
+                  <td>{transaction.value}</td>
+                  <td>{getTransactionStatus(transaction.status_place)}</td>
+                  <td>{transaction.agency_name}</td>
+                  <td>{transaction.user_name}</td>
+                  <td>
+                    <Table.EditButton
+                      onClick={() => {
+                        setTransaction(transaction)
+                        toggle()
+                      }}
+                    />
+                  </td>
+                </tr>
+              ))}
+            </Table.Body>
+          </Table>
+          <div>
+            <PaginationButton
+              currentPage={page}
+              totalPages={totalPages}
+              setPage={setPage}
+            />
+          </div>
+        </>
+      )}
     </>
   )
 }
