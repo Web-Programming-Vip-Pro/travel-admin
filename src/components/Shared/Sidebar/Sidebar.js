@@ -47,6 +47,13 @@ export default function Sidebar() {
       isAdmin: false,
     },
     {
+      title: 'Reviews',
+      icon: 'fas fa-paper-plane',
+      link: '/dashboard/reviews',
+      active: false,
+      isAdmin: false,
+    },
+    {
       title: 'Transactions',
       icon: 'fas fa-money-check',
       link: '/dashboard/transactions',
