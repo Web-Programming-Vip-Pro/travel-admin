@@ -33,7 +33,7 @@
     "zustand": "^3.6.5"
   },
   "scripts": {
-    "start": "next start",
+    "start": "next start -p 4000",
     "build": "next build",
     "dev": "next dev -p 4000",
     "format": "prettier --write ."
