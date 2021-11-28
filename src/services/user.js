@@ -49,6 +49,24 @@ export async function updateUser(user) {
   }
 }
 
+export async function updateInfo(user) {
+  try {
+    const response = await axios.post(`${ENDPOINT}/user/updateInfo`, user)
+    return { success: true, message: response.data }
+  } catch (error) {
+    return { success: false, message: error.response.data.data }
+  }
+}
+
+export async function updatePassword(user) {
+  try {
+    const response = await axios.post(`${ENDPOINT}/user/updatePassword`, user)
+    return { success: true, message: response.data }
+  } catch (error) {
+    return { success: false, message: error.response.data.data }
+  }
+}
+
 export async function deleteUser(id) {
   try {
     const response = await axios

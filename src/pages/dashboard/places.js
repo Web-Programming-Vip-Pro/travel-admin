@@ -12,6 +12,7 @@ import {
   deletePlace,
   mutatePlaces,
 } from '@/services/places'
+import { isAdmin } from '@/utils'
 import { useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
 import { useToggle } from 'react-use'
@@ -75,8 +76,8 @@ const Places = () => {
   const [editedPlace, setEditedPlace] = useState(null)
   const [isModalOpen, toggleModal] = useToggle(false)
   const { data: session } = useSession()
-  const role = session?.user?.role
-  const authorId = role === 0 ? -1 : session?.user?.id
+  const user = session && session.user
+  const authorId = isAdmin(user) ? -1 : session?.user?.id
 
   const { places, isLoading, error } = usePlaces(
     page,

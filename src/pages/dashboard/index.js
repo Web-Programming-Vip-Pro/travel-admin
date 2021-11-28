@@ -1,12 +1,11 @@
 import Admin from '@/layouts/Admin'
-import { useSession, getSession } from 'next-auth/react'
-import { useRouter } from 'next/router'
-import { useEffect } from 'react'
+import { isAdmin } from '@/utils'
+import { getSession } from 'next-auth/react'
 
 export const getServerSideProps = async (ctx) => {
   const session = await getSession(ctx)
   const role = session && session.user && parseInt(session.user.role)
-  if (role === 0) {
+  if (isAdmin(role)) {
     return {
       redirect: {
         destination: '/dashboard/users',
