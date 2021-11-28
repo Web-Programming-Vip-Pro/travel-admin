@@ -12,6 +12,7 @@ import { useToggle } from 'react-use'
 import Modal from '@/components/Shared/Modal'
 import { useForm } from 'react-hook-form'
 import { useSession } from 'next-auth/react'
+import { isAdmin } from '@/utils'
 
 function TransactionModal({ isOpen, toggle, transaction }) {
   const { register, handleSubmit } = useForm({
@@ -86,8 +87,8 @@ const Transactions = () => {
   const [page, setPage] = useState(0)
   const [limit, setLimit] = useState(10)
   const { data: session } = useSession()
-  const role = session?.user?.role
-  const agencyId = role === 0 ? -1 : session?.user?.id
+  const user = session?.user
+  const agencyId = isAdmin(user) ? -1 : session?.user?.id
   const { transactions, totalPages, isLoading, error } = useTransactions(
     page,
     limit,
