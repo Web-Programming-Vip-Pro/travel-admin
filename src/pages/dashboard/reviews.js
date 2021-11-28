@@ -12,7 +12,7 @@ const Reviews = () => {
   const { data: session } = useSession()
   const user = session && session.user
   const isUserAdmin = isAdmin(user)
-  const agencyId = isUserAdmin ? -1 : parseInt(user?.role)
+  const agencyId = isUserAdmin ? -1 : parseInt(user?.id)
   const [page, setPage] = useState(0)
   const [limit, setLimit] = useState(10)
   const [order, setOrder] = useState('recent')
