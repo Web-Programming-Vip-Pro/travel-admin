@@ -17,6 +17,7 @@ export default function Settings() {
       <select
         className="select select-bordered select-primary"
         onChange={(e) => setSetting(parseInt(e.target.value))}
+        value={setting}
       >
         {isUserAdmin && <option value={0}>General</option>}
         <option value={1}>Account</option>
