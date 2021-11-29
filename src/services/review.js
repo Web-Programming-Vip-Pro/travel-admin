@@ -1,4 +1,5 @@
 import useSWR, { mutate } from 'swr'
+import axios from 'axios'
 import { fetcher } from '@/utils'
 const ENDPOINT = process.env.NEXT_PUBLIC_ENDPOINT
 
@@ -15,6 +16,15 @@ export function useReviews(
   const reviews = data && data.data.reviews
   const totalPages = data && data.data.total
   return { reviews, isLoading: !error && !data, error, totalPages }
+}
+
+export async function deleteReview(id) {
+  try {
+    const response = await axios.post(`${ENDPOINT}/reviews`, { id })
+    return { success: true, message: response.data }
+  } catch (error) {
+    return { success: false, message: error.response.data }
+  }
 }
 
 export function mutateReviews(page = 0, limit = 10, agency_id = -1) {

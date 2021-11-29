@@ -2,7 +2,7 @@ import Admin from '@/layouts/Admin'
 import { useState } from 'react'
 import { isAdmin } from '@/utils'
 import { useSession } from 'next-auth/react'
-import { useReviews } from '@/services/review'
+import { useReviews, deleteReview, mutateReviews } from '@/services/review'
 import Table from '@/components/Shared/Table'
 import PaginationButton from '@/components/Shared/Pagination'
 import SelectLimit from '@/components/Shared/Table/SelectLimit'
@@ -22,6 +22,12 @@ const Reviews = () => {
     agencyId,
     order
   )
+
+  async function handleDelete(id) {
+    const response = await deleteReview(id)
+    if (!response.success) return alert(response.message)
+    mutateReviews(page, limit, agencyId)
+  }
 
   if (error) return <div>Failed to load</div>
   return (
@@ -57,7 +63,7 @@ const Reviews = () => {
                   <Table.Row>{review.created_at}</Table.Row>
                   {isUserAdmin && (
                     <Table.Row>
-                      <Table.DeleteButton />
+                      <Table.DeleteButton onClick={handleDelete} />
                     </Table.Row>
                   )}
                 </tr>
