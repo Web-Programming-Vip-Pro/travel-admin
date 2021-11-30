@@ -1,10 +1,12 @@
-function Head({ children }) {
+import { shorten } from '@/utils'
+
+function Head({ children, disableEdit, disableDelete }) {
   return (
     <thead>
       <tr>
         {children}
-        <th>Edit</th>
-        <th>Delete</th>
+        {!disableEdit && <th>Edit</th>}
+        {!disableDelete && <th>Delete</th>}
       </tr>
     </thead>
   )
@@ -12,6 +14,11 @@ function Head({ children }) {
 
 function Body({ children }) {
   return <tbody>{children}</tbody>
+}
+
+function Row({ children }) {
+  if (typeof children !== 'string') return <td>{children}</td>
+  return <td>{children.length > 20 ? shorten(children) : children}</td>
 }
 
 function EditButton({ onClick }) {
@@ -40,6 +47,7 @@ const Table = ({ children }) => {
 
 Table.Head = Head
 Table.Body = Body
+Table.Row = Row
 Table.EditButton = EditButton
 Table.DeleteButton = DeleteButton
 

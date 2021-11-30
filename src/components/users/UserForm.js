@@ -1,11 +1,12 @@
 import { addUser, updateUser } from '@/services/user'
 import { useForm } from 'react-hook-form'
 
-const UserForm = ({ editUser }) => {
+const UserForm = ({ editUser, isAgency }) => {
   const { register, handleSubmit } = useForm({ defaultValues: editUser })
   const isEdited = editUser !== null
   async function onSubmit(data) {
     const user = { repassword: data.password, ...data }
+    user.role = isAgency ? 1 : 0
     const response = isEdited ? await updateUser(user) : await addUser(user)
     if (response.success) {
       alert(isEdited ? 'User updated' : 'User added')
@@ -37,18 +38,6 @@ const UserForm = ({ editUser }) => {
           className="input input-primary input-bordered"
           required
           {...register('email', { required: true })}
-        />
-      </div>
-      <div className="form-control">
-        <label className="label">
-          <span className="label-text">Password</span>
-        </label>
-        <input
-          type="password"
-          placeholder="Password"
-          className="input input-primary input-bordered"
-          required
-          {...register('password', { required: true })}
         />
       </div>
       <div className="form-control">
@@ -120,7 +109,7 @@ const UserForm = ({ editUser }) => {
           />
         </div>
       </div>
-      <div className="form-control mt-4">
+      <div className="mt-4 form-control">
         <button className="btn btn-primary" type="submit">
           {isEdited ? 'Update' : 'Add'}
         </button>

@@ -1,29 +1,26 @@
-import CardLineChart from '@/components/Shared/Cards/CardLineChart'
-import CardBarChart from '@/components/Shared/Cards/CardBarChart'
-
 import Admin from '@/layouts/Admin'
+import { isAdmin } from '@/utils'
+import { getSession } from 'next-auth/react'
+
+export const getServerSideProps = async (ctx) => {
+  const session = await getSession(ctx)
+  const role = session && session.user && parseInt(session.user.role)
+  if (isAdmin(role)) {
+    return {
+      redirect: {
+        destination: '/dashboard/users',
+      },
+    }
+  }
+  return {
+    redirect: {
+      destination: '/dashboard/places',
+    },
+  }
+}
 
 export default function Dashboard() {
-  return (
-    <>
-      <div className="flex flex-wrap">
-        <div className="w-full px-4 mb-12 xl:w-8/12 xl:mb-0">
-          <CardLineChart />
-        </div>
-        <div className="w-full px-4 xl:w-4/12">
-          <CardBarChart />
-        </div>
-      </div>
-      <div className="flex flex-wrap mt-4">
-        <div className="w-full px-4 mb-12 xl:w-8/12 xl:mb-0">
-          {/* <CardPageVisits /> */}
-        </div>
-        <div className="w-full px-4 xl:w-4/12">
-          {/* <CardSocialTraffic /> */}
-        </div>
-      </div>
-    </>
-  )
+  return <></>
 }
 
 Dashboard.layout = Admin

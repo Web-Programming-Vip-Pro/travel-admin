@@ -5,11 +5,9 @@ import { addCity, updateCity } from '@/services/city'
 
 function CityForm({ defaultCity }) {
   const { countries } = useCountries()
-  const [error, setError] = useState(null)
   const isEdit = !!defaultCity
   const { register, handleSubmit } = useForm()
   async function onSubmit(data) {
-    setError(null)
     let response
     if (isEdit) {
       response = await updateCity(defaultCity.id, data)
@@ -17,20 +15,13 @@ function CityForm({ defaultCity }) {
       response = await addCity(data)
     }
     if (response.success) {
-      setError(false)
+      alert(isEdit ? 'City updated successfully' : 'City added successfully')
     } else {
-      setError(response.message)
+      alert(response.message)
     }
   }
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      {error !== null && (
-        <div
-          className={`alert py-2 ${error ? `alert-error` : 'alert-success'}`}
-        >
-          {error ? error : 'City added successfully'}
-        </div>
-      )}
       <div className="form-control">
         <label className="label">
           <span className="label-text">Name</span>

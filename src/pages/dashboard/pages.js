@@ -26,16 +26,16 @@ export const getServerSideProps = async () => {
 const Pages = ({ pagesData }) => {
   const [pages, setPages] = useState(pagesData)
   const [selectedPage, setSelectedPage] = useState(pages[0])
-  const [isSuccess, setIsSuccess] = useState(null)
+  const [isLoading, setIsLoading] = useState(false)
   const [editorState, setEditorState] = useState(() =>
     EditorState.createEmpty()
   )
   async function onUpdatePage() {
-    setIsSuccess(null)
+    setIsLoading(true)
     const html = draftToHtml(convertToRaw(editorState.getCurrentContent()))
     const response = await updatePage(selectedPage.id, html)
     if (response.success) {
-      setIsSuccess(true)
+      alert('Page updated successfully')
       setSelectedPage({ ...selectedPage, content: html })
       setPages(
         pages.map((page) => {
@@ -46,8 +46,9 @@ const Pages = ({ pagesData }) => {
         })
       )
     } else {
-      setIsSuccess(false)
+      alert('Error updating page')
     }
+    setIsLoading(false)
   }
 
   useEffect(() => {
@@ -65,7 +66,7 @@ const Pages = ({ pagesData }) => {
     <>
       <div className="w-full">
         <select
-          className="select select-bordered w-full"
+          className="w-full select select-bordered"
           onChange={(e) => selectPage(e.target.value)}
           value={selectedPage.id}
         >
@@ -76,7 +77,7 @@ const Pages = ({ pagesData }) => {
           ))}
         </select>
       </div>
-      <div className="mt-4 bg-white rounded-lg prose w-full max-w-full">
+      <div className="w-full max-w-full mt-4 prose bg-white rounded-lg">
         {window && (
           <Editor
             editorState={editorState}
@@ -90,19 +91,12 @@ const Pages = ({ pagesData }) => {
           />
         )}
       </div>
-      {isSuccess !== null && (
-        <div
-          className={`alert mt-4 ${
-            isSuccess ? 'alert-success' : 'alert-error'
-          }`}
-        >
-          <div className="flex-1">
-            <label>{isSuccess ? 'Page updated' : 'Error'}</label>
-          </div>
-        </div>
-      )}
       <div className="mt-2">
-        <button className="btn btn-primary" onClick={onUpdatePage}>
+        <button
+          className={`btn btn-primary ${isLoading && 'disabled'}`}
+          onClick={onUpdatePage}
+          disabled={isLoading}
+        >
           Update
         </button>
       </div>

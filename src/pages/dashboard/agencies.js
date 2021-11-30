@@ -11,9 +11,9 @@ import {
   useUsers,
   useUsersPage,
 } from '@/services/user'
+import { getSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
 import { useToggle } from 'react-use'
-import { getSession } from 'next-auth/react'
 
 export const getServerSideProps = async (ctx) => {
   const session = await getSession(ctx)
@@ -34,33 +34,33 @@ function UserModal({ isOpen, toggle, editUser }) {
   return (
     <Modal isOpen={isOpen} toggle={toggle}>
       <Modal.Body>
-        <UserForm editUser={editUser} />
+        <UserForm editUser={editUser} isAgency />
       </Modal.Body>
     </Modal>
   )
 }
 
-const Users = () => {
+const Agencies = () => {
   const [page, setPage] = useState(0)
   const [isModalOpen, toggleModal] = useToggle(false)
   const [editUser, setEditUser] = useState(null)
-  const [searchText, setSearchText] = useState('')
   const [limit, setLimit] = useState(10)
-  const ROLE = 0
+  const [searchText, setSearchText] = useState('')
+  const ROLE = 1
   const { totalPages, isLoading: isTotalPagesLoading } = useUsersPage(limit)
   const { users, loading, error } = useUsers(page, limit, ROLE, searchText)
   useEffect(() => {
     if (!isModalOpen) {
       setEditUser(null)
     }
-    mutateUsers(page, limit, ROLE, searchText)
+    mutateUsers(page, limit, ROLE)
   }, [isModalOpen])
 
   async function handleDelete(id) {
     if (window.confirm('Are you sure?')) {
       const response = await deleteUser(id)
       if (response.success) {
-        mutateUsers(page, limit)
+        mutateUsers(page, limit, ROLE)
         alert('User deleted!')
       } else {
         alert(response.message)
@@ -133,6 +133,6 @@ const Users = () => {
   )
 }
 
-Users.layout = Admin
+Agencies.layout = Admin
 
-export default Users
+export default Agencies
